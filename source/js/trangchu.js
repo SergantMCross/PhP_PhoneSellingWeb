@@ -7,21 +7,21 @@ var CurrentFilters = [];
 window.onload = function() {
     khoiTao();
 
-    // autocomplete cho khung tim kiem
+    // autocomplete for search box
     // autocomplete(document.getElementById('search-box'), list_products);
 
-    // thêm tags (từ khóa) vào khung tìm kiếm
+    // add tags (keywords) to search box
     var tags = ["Samsung", "iPhone", "Coolpad", "Oppo", "Mobi"];
     for (var t of tags) addTags(t, "index.php?search=" + t);
 
-    // =================== web 2 tìm nâng cao ================
-    // Thêm hình vào banner
+    // =================== web 2 advanced search ================
+    // Add images to banner
     setupBanner();
 
-    // Thêm danh sách hãng điện thoại
+    // Add phone brand list
     setupCompany();
 
-    // slider chọn khoảng giá
+    // slider for price range
     $("#demoSlider").ionRangeSlider({
         type: "double",
         grid: true,
@@ -31,7 +31,7 @@ window.onload = function() {
         to: 50,
         step: 0.5,
         drag_interval: true,
-        postfix: " triệu",
+        postfix: " million",
         prettify_enabled: true,
         prettify_separator: ",",
         values_separator: " →   ",
@@ -41,30 +41,30 @@ window.onload = function() {
     });
     // ==================== End ===========================
 
-    // Thêm sản phẩm vào trang
+    // Add products to page
     var filters = getFilterFromURL();
-    if (filters.length) { // có filter
+    if (filters.length) { // has filter
         filtersAjax(filters);
 
-    } else { // ko có filter : trang chính mặc định sẽ hiển thị các sp hot, ...
+    } else { // no filter : main page will display hot products by default, ...
         hienThiKhungSanPhamMacDinh();
     }
 
-    // Thêm chọn mức giá
+    // Add price range selection
     addPricesRange(0, 2000000);
     addPricesRange(2000000, 4000000);
     addPricesRange(4000000, 7000000);
     addPricesRange(7000000, 13000000);
     addPricesRange(13000000, 0);
 
-    // Thêm chọn khuyến mãi
+    // Add promotion selection
     addPromotion('Nothing');
     addPromotion('giamgia');
     addPromotion('tragop');
     addPromotion('moiramat');
     addPromotion('giareonline');
 
-    // Thêm chọn số sao
+    // Add star rating selection
     addStarFilter(0);
     addStarFilter(1);
     addStarFilter(2);
@@ -72,15 +72,15 @@ window.onload = function() {
     addStarFilter(4);
     addStarFilter(5);
 
-    // Thêm chọn sắp xếp
-    addSortFilter('asc', 'DonGia', 'Giá tăng dần');
-    addSortFilter('des', 'DonGia', 'Giá giảm dần');
-    addSortFilter('asc', 'SoSao', 'Sao tăng dần');
-    addSortFilter('des', 'SoSao', 'Sao giảm dần');
-    addSortFilter('asc', 'SoDanhGia', 'Đánh giá tăng dần');
-    addSortFilter('des', 'SoDanhGia', 'Đánh giá giảm dần');
-    addSortFilter('asc', 'TenSP', 'Tên A-Z');
-    addSortFilter('des', 'TenSP', 'Tên Z-A');
+    // Add sort selection
+    addSortFilter('asc', 'DonGia', 'Price ascending');
+    addSortFilter('des', 'DonGia', 'Price descending');
+    addSortFilter('asc', 'SoSao', 'Star ascending');
+    addSortFilter('des', 'SoSao', 'Star descending');
+    addSortFilter('asc', 'SoDanhGia', 'Rating ascending');
+    addSortFilter('des', 'SoDanhGia', 'Rating descending');
+    addSortFilter('asc', 'TenSP', 'Name A-Z');
+    addSortFilter('des', 'TenSP', 'Name Z-A');
 };
 
 // ============================== web2 ===========================
@@ -88,20 +88,20 @@ function hienThiKhungSanPhamMacDinh() {
 
     $('.contain-khungSanPham').html('');
 
-    var soLuong = (window.innerWidth < 1200 ? 4 : 5); // màn hình nhỏ thì hiển thị 4 sp, to thì hiển thị 5
+    var soLuong = (window.innerWidth < 1200 ? 4 : 5); // small screen displays 4 products, large displays 5
 
-    // Các màu
+    // Colors
     var yellow_red = ['#ff9c00', '#ec1f1f'];
     var blue = ['#42bcf4', '#004c70'];
     var green = ['#5de272', '#007012'];
 
-    // Thêm các khung sản phẩm
-    addKhungSanPham('NỔI BẬT NHẤT', yellow_red, ['star=0', 'sort=SoDanhGia-desc', 'page=0'], soLuong);
-    addKhungSanPham('SẢN PHẨM MỚI', blue, ['promo=moiramat', 'sort=SoDanhGia-desc', 'page=0'], soLuong);
-    addKhungSanPham('TRẢ GÓP 0%', yellow_red, ['promo=tragop', 'page=0'], soLuong);
-    addKhungSanPham('GIÁ SỐC ONLINE', green, ['promo=giareonline', 'page=0'], soLuong);
-    addKhungSanPham('GIẢM GIÁ LỚN', yellow_red, ['promo=giamgia', 'page=0'], soLuong);
-    addKhungSanPham('GIÁ RẺ CHO MỌI NHÀ', green, ['price=0-3000000', 'sort=DonGia-asc', 'page=0'], soLuong);
+    // Add product frames
+    addKhungSanPham('MOST POPULAR', yellow_red, ['star=0', 'sort=SoDanhGia-desc', 'page=0'], soLuong);
+    addKhungSanPham('NEW PRODUCTS', blue, ['promo=moiramat', 'sort=SoDanhGia-desc', 'page=0'], soLuong);
+    addKhungSanPham('0% INSTALLMENT', yellow_red, ['promo=tragop', 'page=0'], soLuong);
+    addKhungSanPham('SHOCKING PRICE ONLINE', green, ['promo=giareonline', 'page=0'], soLuong);
+    addKhungSanPham('BIG DISCOUNT', yellow_red, ['promo=giamgia', 'page=0'], soLuong);
+    addKhungSanPham('AFFORDABLE FOR EVERYONE', green, ['price=0-3000000', 'sort=DonGia-asc', 'page=0'], soLuong);
 }
 
 function setupBanner() {
@@ -109,7 +109,7 @@ function setupBanner() {
         type: "POST",
         url: "php/xulyhinhanh.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getallbanners",
         },
@@ -119,7 +119,7 @@ function setupBanner() {
                 addBanner(realPath, realPath);
             }
 
-            // Khởi động thư viện hỗ trợ banner - chỉ chạy khi đã tạo hình trong banner
+            // Start banner library - only runs when images are created in banner
             $('.owl-carousel').owlCarousel({
                 items: 1.5,
                 margin: 100,
@@ -147,7 +147,7 @@ function setupBanner() {
         error: function() {
             Swal.fire({
                 type: "error",
-                title: "Lỗi lấy dữ liệu hình ảnh banners (trangchu.js > setUpBanner)",
+                title: "Error loading banner image data (trangchu.js > setUpBanner)",
                 html: e.responseText
             });
         }
@@ -157,7 +157,7 @@ function setupBanner() {
         type: "POST",
         url: "php/xulyhinhanh.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getsmallbanner",
         },
@@ -170,20 +170,20 @@ function setupBanner() {
         error: function() {
             Swal.fire({
                 type: "error",
-                title: "Lỗi lấy dữ liệu hình ảnh small banners (trangchu.js > setUpBanner)",
+                title: "Error loading small banner image data (trangchu.js > setUpBanner)",
                 html: e.responseText
             });
         }
     });
 }
 
-// chọn hãng
+// select brand
 function setupCompany() {
     $.ajax({
         type: "POST",
         url: "php/xulyloaisanpham.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getall",
         },
@@ -196,7 +196,7 @@ function setupCompany() {
         error: function(e) {
             Swal.fire({
                 type: "error",
-                title: "Lỗi lấy dữ liệu loại sản phẩm (trangchu.js > setupCompany)",
+                title: "Error loading product type data (trangchu.js > setupCompany)",
                 html: e.responseText
             });
         }
@@ -204,11 +204,11 @@ function setupCompany() {
 }
 
 function addProductsFromList(list, filters) {
-    DanhSachSanPham = list; // lưu danh sách hiện thời
-    $("#divSoLuongSanPham").html("Tìm thấy <span>"+ list.length + "</span> sản phẩm")
+    DanhSachSanPham = list; // save current list
+    $("#divSoLuongSanPham").html("Found <span>"+ list.length + "</span> products")
 
     if (list.length == 0) {
-        alertNotHaveProduct(false); // nếu length = 0 thì hiện ko có sản phẩm
+        alertNotHaveProduct(false); // if length = 0, show no products
         return;
     } else {
         alertNotHaveProduct(true);
@@ -240,7 +240,7 @@ function addProductsFromList(list, filters) {
 }
 
 function chuyenTrang(vitriTrang) {
-    // xóa các sản phẩm trang cũ
+    // remove old page products
     $("#products li.sanPham").remove();
     pushState(createFilters('page', vitriTrang));
 
@@ -263,18 +263,18 @@ function filtersAjax(filters, callback) {
         return;
     }
 
-    if (!callback) { // ko có call back -> mặc định là thêm vào contain-products
-        // hiển thị list sản phẩm
+    if (!callback) { // no callback -> default is add to contain-products
+        // display product list
         $(".contain-products").css("display", "block");
         $(".contain-khungSanPham").css("display", "none");
-        $(".contain-products li.sanPham").remove(); // xóa các sản phẩm hiện tại
+        $(".contain-products li.sanPham").remove(); // remove current products
         $(".loader").css("display", "block");
     }
     $.ajax({
         type: "POST",
         url: "php/xulysanpham.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "phanTich_Filters",
             filters: filters
@@ -292,7 +292,7 @@ function filtersAjax(filters, callback) {
         error: function(e) {
             Swal.fire({
                 type: "error",
-                title: "Lỗi lấy dữ liệu sản phẩm filters (trangchu.js > filtersAjax)",
+                title: "Error loading product filter data (trangchu.js > filtersAjax)",
                 html: e.responseText
             });
         }
@@ -304,7 +304,7 @@ function ajaxThemSanPham(p, onSuccess, onFail) {
         type: "POST",
         url: "php/xulysanpham.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "addFromWeb1",
             sanpham: p
@@ -312,7 +312,7 @@ function ajaxThemSanPham(p, onSuccess, onFail) {
         success: function(data, status, xhr) {
             if (onSuccess) onSuccess(data);
             else {
-                console.log('Thêm thành công ');
+                console.log('Add successful ');
                 console.log(data);
             }
         },
@@ -321,7 +321,7 @@ function ajaxThemSanPham(p, onSuccess, onFail) {
             else {
                 Swal.fire({
                     type: "error",
-                    title: "Lỗi thêm sản phẩm sản phẩm " + p + " (trangchu.js > ajaxThemSanPham)",
+                    title: "Error adding product " + p + " (trangchu.js > ajaxThemSanPham)",
                     html: e.responseText
                 });
             }
@@ -330,7 +330,7 @@ function ajaxThemSanPham(p, onSuccess, onFail) {
 }
 
 function addToWeb(p, ele, returnString) {
-    // Chuyển star sang dạng tag html
+    // Convert star to html tag format
     var rating = "";
     if (p.SoDanhGia >= 0) {
         for (var i = 1; i <= 5; i++) {
@@ -340,10 +340,10 @@ function addToWeb(p, ele, returnString) {
                 rating += `<i class="fa fa-star-o"></i>`
             }
         }
-        rating += `<span>` + p.SoDanhGia + ` đánh giá</span>`;
+        rating += `<span>` + p.SoDanhGia + ` reviews</span>`;
     }
 
-    // Chuyển giá tiền sang dạng tag html
+    // Convert price to html tag format
     var giaTri = parseInt(p.DonGia);
     var giaTrikhuyenMai = parseInt(p.KM.GiaTriKM);
     var giaTriSauKM = giaTri - giaTrikhuyenMai;
@@ -361,11 +361,11 @@ function addToWeb(p, ele, returnString) {
         pricediv = `<strong>` + giaTri.toLocaleString() + `&#8363;</strong>`;
     }
 
-    // tách theo dấu ' ' vào gắn lại bằng dấu '-', code này giúp bỏ hết khoảng trắng và thay vào bằng dấu '-'.
-    // Tạo link tới chi tiết sản phẩm, chuyển tất cả ' ' thành '-'
+    // split by ' ' and rejoin with '-', this code removes all whitespace and replaces with '-'.
+    // Create link to product details, replace all ' ' with '-'
     var chitietSp = 'chitietsanpham.php?' + p.MaSP;
 
-    // Cho mọi thứ vào tag <li>... </li>
+    // Put everything into <li> tag
     var newLi =
         `<li class="sanPham">
         <a href="` + chitietSp + `">
@@ -380,7 +380,7 @@ function addToWeb(p, ele, returnString) {
             ` + (promoToWeb(p.KM.LoaiKM, giaTrikhuyenMai)) + `
             <div class="tooltip">
                 <button class="themvaogio" onclick="return themVaoGioHang('` + p.MaSP + `', '` + p.TenSP + `');">
-                    <span class="tooltiptext" style="font-size: 15px;">Thêm vào giỏ</span>
+                    <span class="tooltiptext" style="font-size: 15px;">Add to cart</span>
                     +
                 </button>
             </div>
@@ -389,16 +389,16 @@ function addToWeb(p, ele, returnString) {
 
     if (returnString) return newLi;
 
-    // Thêm tag <li> vừa tạo vào <ul> homeproduct (mặc định) , hoặc tag ele truyền vào
+    // Add newly created <li> tag to <ul> homeproduct (default), or passed ele tag
     var products = ele || document.getElementById('products');
     products.innerHTML += newLi;
 }
 
-// =========== Đọc dữ liệu từ url ============
-function getFilterFromURL() { // tách và trả về mảng bộ lọc trên url
+// =========== Read data from url ============
+function getFilterFromURL() { // split and return array of filters from url
     var fullLocation = window.location.href;
     fullLocation = decodeURIComponent(fullLocation);
-    var dauHoi = fullLocation.split('?'); // tách theo dấu ?
+    var dauHoi = fullLocation.split('?'); // split by ?
 
     if (dauHoi[1]) {
         var dauVa = dauHoi[1].split('&');
@@ -408,14 +408,14 @@ function getFilterFromURL() { // tách và trả về mảng bộ lọc trên ur
     return [];
 }
 
-// Thêm sản phẩm vào các khung sản phẩm
+// Add products to product frames
 function addKhungSanPham(tenKhung, color, filters, len) {
     // convert color to code
     var gradient = `background-image: linear-gradient(120deg, ` + color[0] + ` 0%, ` + color[1] + ` 50%, ` + color[0] + ` 100%);`
     var borderColor = `border-color: ` + color[0];
     var borderA = ` border-left: 2px solid ` + color[0] + `; border-right: 2px solid ` + color[0] + `;`;
 
-    // mở tag
+    // open tag
     var s = `<div class="khungSanPham" style="` + borderColor + `">
                 <h3 class="tenKhung" style="` + gradient + `">* ` + tenKhung + ` *</h3>
                 <div class="listSpTrongKhung flexContain" data-tenkhung="` + tenKhung + `">
@@ -426,38 +426,38 @@ function addKhungSanPham(tenKhung, color, filters, len) {
               </div> <hr>`;
 
 
-    // thêm khung vào contain-khung
+    // add frame to contain-khung
     document.getElementsByClassName('contain-khungSanPham')[0].innerHTML += s;
 
-    // lấy dữ liệu cho vào khung
+    // get data to put into frame
     filtersAjax(filters, (data) => {
-        // thêm các <li> (sản phẩm) vào tag
+        // add <li> (products) to tag
         var s1 = "";
         var spResult = data;
         if (spResult.length < len) len = spResult.length;
 
         for (var i = 0; i < len; i++) {
             s1 += addToWeb(spResult[i], null, true);
-            // truyền vào 'true' để trả về chuỗi rồi gán vào s
+            // pass 'true' to return a string then assign to s
         }
 
         $("div.listSpTrongKhung[data-tenkhung='" + tenKhung + "']").html(s1);
-        $("a.xemTatCa[data-tenkhung='" + tenKhung + "']").html("Xem tất cả " + spResult.length + " sản phẩm");
+        $("a.xemTatCa[data-tenkhung='" + tenKhung + "']").html("View all " + spResult.length + " products");
     })
 }
 
-// Nút phân trang
+// Pagination buttons
 function themNutPhanTrang(soTrang, trangHienTai) {
     var divPhanTrang = document.getElementsByClassName('pagination')[0];
 
-    divPhanTrang.innerHTML = ""; // xóa phân trang cũ
+    divPhanTrang.innerHTML = ""; // clear old pagination
 
-    if (trangHienTai > 1) { // Nút về phân trang trước
+    if (trangHienTai > 1) { // Previous page button
         divPhanTrang.innerHTML += `<a onclick="chuyenTrang(1)"><i class="fa fa-angle-double-left"></i></a>`;
         divPhanTrang.innerHTML += `<a onclick="chuyenTrang(` + (trangHienTai - 1) + `)"><i class="fa fa-angle-left"></i></a>`;
     }
 
-    if (soTrang > 1) { // Chỉ hiện nút phân trang nếu số trang > 1
+    if (soTrang > 1) { // Only show pagination buttons if page count > 1
         for (var i = trangHienTai - (SoLuongTrangHienThi - 2); i <= trangHienTai + (SoLuongTrangHienThi - 2); i++) {
             if (i == trangHienTai) {
                 divPhanTrang.innerHTML += `<a href="javascript:;" class="current">` + i + `</a>`
@@ -468,7 +468,7 @@ function themNutPhanTrang(soTrang, trangHienTai) {
         }
     }
 
-    if (trangHienTai < soTrang) { // Nút tới phân trang sau
+    if (trangHienTai < soTrang) { // Next page button
         divPhanTrang.innerHTML += `<a onclick="chuyenTrang(` + (trangHienTai + 1) + `)"><i class="fa fa-angle-right"></i></a>`;
         divPhanTrang.innerHTML += `<a onclick="chuyenTrang(` + (soTrang) + `)"><i class="fa fa-angle-double-right"></i></a>`;
     }
@@ -487,13 +487,13 @@ function pushState(filters) {
     if(fsort != '') {
         str += fsort;
     } else if(str.indexOf("&") >= 0) {
-        str = str.slice(0, str.length - 1); // loại bỏ "&" dư thừa
+        str = str.slice(0, str.length - 1); // remove extra "&"
     }
 
     history.pushState("", "", str);
 }
 
-// ========== LỌC ===============
+// ========== FILTERS ===============
 function createFilters(type, value) {
     var newFilters = [];
 
@@ -527,7 +527,7 @@ function craeteRemoveFilters(type) {
         var fValue = fSplit[1];
 
         if (fType == type) {
-            // không thêm cái cần remove
+            // do not add the one to remove
         } else {
             newFilters.push(f);
         }
@@ -547,7 +547,7 @@ function removeAllFilters() {
     $(".contain-products").css("display", "none");
 }
 
-// Thêm bộ lọc đã chọn vào html
+// Add selected filter to html
 function addChoosedFilter(type, textInside) {
     var divChoosedFilter = document.getElementsByClassName('choosedFilter')[0];
     divChoosedFilter.innerHTML += (`<a onclick="filtersAjax(craeteRemoveFilters('`+type+`'))">
@@ -555,13 +555,13 @@ function addChoosedFilter(type, textInside) {
         </a>`);
 }
 
-// Thêm nhiều bộ lọc cùng lúc 
+// Add multiple filters at once 
 function addAllChoosedFilter(filters) {
-    // xóa tất cả bộ lọc cũ
-    $(".choosedFilter").html(`<a onclick="removeAllFilters()"><h3>Xóa bộ lọc <i class="fa fa-close"></i></h3></a>`);
+    // remove all old filters
+    $(".choosedFilter").html(`<a onclick="removeAllFilters()"><h3>Clear filters <i class="fa fa-close"></i></h3></a>`);
     $(".choosedFilter").css("display", "");
 
-    // Lưu bộ lọc mới
+    // Save new filters
     CurrentFilters = filters;
 
     if (filters.length) {
@@ -579,7 +579,7 @@ function addAllChoosedFilter(filters) {
                             tenHang = c.TenLSP;
                         }
                     }
-                    addChoosedFilter('company', "Hãng " + tenHang);
+                    addChoosedFilter('company', "Brand " + tenHang);
                     break;
 
                 case 'search':
@@ -598,7 +598,7 @@ function addAllChoosedFilter(filters) {
                 case 'sort':
                     var sorts = value.split('-');
                     var sortBy = sortToString(sorts[0]);
-                    var kieuSapXep = (sorts[1] == 'asc' ? 'tăng dần' : 'giảm dần');
+                    var kieuSapXep = (sorts[1] == 'asc' ? 'ascending' : 'descending');
                     addChoosedFilter('sort', sortBy + kieuSapXep);
                     break;
                 default:
@@ -609,45 +609,45 @@ function addAllChoosedFilter(filters) {
     }
 }
 
-// Thông báo nếu không có sản phẩm
+    // Alert if no products available
 function alertNotHaveProduct(coSanPham) {
     var thongbao = document.getElementById('khongCoSanPham');
     if (!coSanPham) {
         thongbao.style.width = "auto";
         thongbao.style.opacity = "1";
-        thongbao.style.margin = "auto"; // Căn giữa
-        thongbao.style.transitionDuration = "1s"; // hiện ra từ từ
+        thongbao.style.margin = "auto"; // Center
+        thongbao.style.transitionDuration = "1s"; // appear gradually
 
     } else {
         thongbao.style.width = "0";
         thongbao.style.opacity = "0";
         thongbao.style.margin = "0";
-        thongbao.style.transitionDuration = "0s"; // Ngay lâp tức biến mất
+        thongbao.style.transitionDuration = "0s"; // Disappear immediately
     }
 }
 
-// ========== Lọc TRONG TRANG ============
-// Hiển thị Sản phẩm
+// ========== Filter ON PAGE ============
+// Show product
 function showLi(li) {
     li.style.opacity = 1;
     li.style.width = "239px";
     li.style.borderWidth = "1px";
 }
-// Ẩn sản phẩm
+// Hide product
 function hideLi(li) {
     li.style.width = 0;
     li.style.opacity = 0;
     li.style.borderWidth = "0";
 }
 
-// Lấy mảng sản phẩm trong trang hiện tại (ở dạng tag html)
+// Get product array on current page (in html tag form)
 function getLiArray() {
     var ul = document.getElementById('products');
     var listLi = ul.getElementsByTagName('li');
     return listLi;
 }
 
-// lọc theo tên
+// filter by name
 function getNameFromLi(li) {
     var a = li.getElementsByTagName('a')[0];
     var h3 = a.getElementsByTagName('h3')[0];
@@ -674,13 +674,13 @@ function filterProductsName(ele) {
         }
     }
 
-    // Thông báo nếu không có sản phẩm
+// Alert if no products available
     alertNotHaveProduct(coSanPham);
 }
 
-// ================= Hàm khác ==================
+// ================= Other functions ==================
 
-// Thêm banner
+// Add banner
 function addBanner(img, link) {
     // <a target='_blank' href=` + link + `>
     var newDiv = `<div class='item'>
@@ -696,7 +696,7 @@ function addSmallBanner(img) {
     smallbanner.innerHTML += newimg;
 }
 
-// Thêm hãng sản xuất
+// Add manufacturer
 function addCompany(img, nameCompany) {
     var new_tag = `<button onclick="filtersAjax(['company=` + nameCompany + `'])"><img src=` + img + `></button>`;
 
@@ -704,7 +704,7 @@ function addCompany(img, nameCompany) {
     khung_hangSanXuat.innerHTML += new_tag;
 }
 
-// Thêm chọn mức giá
+// Add price range selection
 function addPricesRange(min, max) {
     var text = priceToString(min, max);
     var a = `<a onclick="filtersAjax(createFilters('price', '` + (min + "-" + max) + `'))">` + text + `</a>`
@@ -713,7 +713,7 @@ function addPricesRange(min, max) {
         .getElementsByClassName('dropdown-content')[0].innerHTML += a;
 }
 
-// Thêm chọn khuyến mãi
+// Add promotion selection
 function addPromotion(name) {
     var text = promoToString(name);
     var promo = `<a onclick="filtersAjax(createFilters('promo', '` + name + `'))">` + text + `</a>`;
@@ -722,7 +722,7 @@ function addPromotion(name) {
         .getElementsByClassName('dropdown-content')[0].innerHTML += promo;
 }
 
-// Thêm chọn số lượng sao
+// Add star quantity selection
 function addStarFilter(value) {
     var text = starToString(value);
     var star = `<a onclick="filtersAjax(createFilters('star', '` + value + `'))">` + text + `</a>`;
@@ -731,7 +731,7 @@ function addStarFilter(value) {
         .getElementsByClassName('dropdown-content')[0].innerHTML += star;
 }
 
-// Thêm chọn sắp xếp theo giá
+// Add price sort selection
 function addSortFilter(type, nameFilter, text) {
     var sortTag = `<a onclick="filtersAjax(createFilters('sort', '` + (nameFilter + "-" + type) + `'))">` + text + `</a>`;
 
@@ -741,54 +741,54 @@ function addSortFilter(type, nameFilter, text) {
 
 //  =================== ToString ====================
 function searchToString(value) {
-    return "Tìm '" + value + "'";
+    return "Search '" + value + "'";
 }
 
-// Chuyển mức giá về dạng chuỗi tiếng việt
+// Convert price level to string
 function priceToString(min, max) {
-    if (min == 0) return 'Dưới ' + max / 1E6 + ' triệu';
-    if (max == 0) return 'Trên ' + min / 1E6 + ' triệu';
-    return 'Từ ' + min / 1E6 + ' - ' + max / 1E6 + ' triệu';
+    if (min == 0) return 'Under ' + max / 1E6 + ' million';
+    if (max == 0) return 'Above ' + min / 1E6 + ' million';
+    return 'From ' + min / 1E6 + ' - ' + max / 1E6 + ' million';
 }
 
-// Chuyển khuyến mãi vễ dạng chuỗi tiếng việt
+// Convert promotion to string
 function promoToString(name) {
     switch (name) {
         case 'tragop':
-            return 'Trả góp';
+            return 'Installment';
         case 'giamgia':
-            return 'Giảm giá';
+            return 'Discount';
         case 'giareonline':
-            return 'Giá rẻ online';
+            return 'Online cheap';
         case 'moiramat':
-            return 'Mới ra mắt';
+            return 'New launch';
         case 'Nothing':
-            return 'Không khuyến mãi';
+            return 'No promotion';
     }
 }
 
-// Chuyển số sao về dạng chuỗi tiếng việt
+// Convert star count to string
 function starToString(star) {
-    return 'Từ ' + star + ' sao trở lên';
+    return 'From ' + star + ' stars and up';
 }
 
-// Chuyển các loại sắp xếp về dạng chuỗi tiếng việt
+// Convert sort types to string
 function sortToString(sortBy) {
     switch (sortBy) {
         case 'DonGia':
-            return 'Giá ';
+            return 'Price ';
         case 'SoSao':
-            return 'Sao ';
+            return 'Star ';
         case 'SoDanhGia':
-            return 'Đánh giá ';
+            return 'Rating ';
         case 'TenSP':
-            return 'Tên ';
+            return 'Name ';
         default:
             return '';
     }
 }
 
-// Hàm Test, chưa sử dụng
+// Test function, not used
 function hideSanPhamKhongThuoc(list) {
     var allLi = getLiArray();
     for (var i = 0; i < allLi.length; i++) {

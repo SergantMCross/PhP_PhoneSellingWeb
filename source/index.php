@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -7,7 +7,7 @@
 	<!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
-	<title>Thế giới điện thoại</title>
+	<title>Smartphone Store</title>
 	<link rel="shortcut icon" href="img/favicon.ico" />
 
 	<!-- Load font awesome icons -->

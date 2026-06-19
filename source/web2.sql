@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 16, 2019 lúc 09:53 PM
--- Phiên bản máy phục vụ: 10.1.37-MariaDB
--- Phiên bản PHP: 7.2.12
+-- Server: 127.0.0.1
+-- Created time: May 16, 2019 at 09:53 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP version: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `web2`
+-- Database: `web2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitiethoadon`
+-- Table structure for table `chitiethoadon`
 --
 
 CREATE TABLE `chitiethoadon` (
@@ -38,7 +38,7 @@ CREATE TABLE `chitiethoadon` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `danhgia`
+-- Table structure for table `danhgia`
 --
 
 CREATE TABLE `danhgia` (
@@ -50,25 +50,25 @@ CREATE TABLE `danhgia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `danhgia`
+-- Dumping data for table `danhgia`
 --
 
 INSERT INTO `danhgia` (`MaSP`, `MaND`, `SoSao`, `BinhLuan`, `NgayLap`) VALUES
-(4, '2', 4, 'Hoàng trần đẹp trai', '2019-05-16 19:28:13'),
-(4, '2', 1, 'Chưa tốt! cần cải thiện nhiều', '2019-05-16 19:29:30'),
-(2, '2', 4, 'Giảm giá 500k , quá gắt <3', '2019-05-16 19:31:48'),
-(46, '2', 4, 'Đỏ may mắn <3', '2019-05-16 19:32:58'),
-(44, '4', 5, 'wow, giá rẻ cấu hình ngon đây rồi <3', '2019-05-16 19:38:03'),
-(4, '4', 4, 'đẹp', '2019-05-16 19:47:56'),
-(2, '4', 3, 'aaa sơn cmn tùng <3', '2019-05-16 19:48:46'),
-(44, '4', 3, 'Ram có 1GB tiếc quá', '2019-05-16 19:49:20'),
-(46, '4', 2, 'Pin khá tệ ', '2019-05-16 19:49:44'),
-(15, '4', 4, 'mua vài chục cái về cho con cháu chọi nhau chơi :v', '2019-05-16 19:52:14');
+(4, '2', 4, 'Handsome Hoang Tran', '2019-05-16 19:28:13'),
+(4, '2', 1, 'Not good! needs improvement', '2019-05-16 19:29:30'),
+(2, '2', 4, '500k discount, amazing <3', '2019-05-16 19:31:48'),
+(46, '2', 4, 'Lucky red <3', '2019-05-16 19:32:58'),
+(44, '4', 5, 'wow, cheap with great specs <3', '2019-05-16 19:38:03'),
+(4, '4', 4, 'beautiful', '2019-05-16 19:47:56'),
+(2, '4', 3, 'awesome <3', '2019-05-16 19:48:46'),
+(44, '4', 3, 'Only 1GB RAM, too bad', '2019-05-16 19:49:20'),
+(46, '4', 2, 'Battery is quite bad', '2019-05-16 19:49:44'),
+(15, '4', 4, 'bought a few dozen for the kids to play :v', '2019-05-16 19:52:14');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoadon`
+-- Table structure for table `hoadon`
 --
 
 CREATE TABLE `hoadon` (
@@ -86,7 +86,7 @@ CREATE TABLE `hoadon` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khuyenmai`
+-- Table structure for table `khuyenmai`
 --
 
 CREATE TABLE `khuyenmai` (
@@ -99,20 +99,20 @@ CREATE TABLE `khuyenmai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `khuyenmai`
+-- Dumping data for table `khuyenmai`
 --
 
 INSERT INTO `khuyenmai` (`MaKM`, `TenKM`, `LoaiKM`, `GiaTriKM`, `NgayBD`, `NgayKT`) VALUES
-(1, 'Không khuyến mãi', 'Nothing', 0, '2019-04-08 00:00:00', '2022-04-17 00:00:00'),
-(2, 'Giảm giá', 'GiamGia', 500000, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
-(3, 'Giá rẻ online', 'GiaReOnline', 650000, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
-(4, 'Trả góp', 'TraGop', 0, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
-(5, 'Mới ra mắt', 'MoiRaMat', 0, '2019-05-01 00:00:00', '2019-05-31 00:00:00');
+(1, 'No Promotion', 'Nothing', 0, '2019-04-08 00:00:00', '2022-04-17 00:00:00'),
+(2, 'Discount', 'GiamGia', 500000, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
+(3, 'Online Cheap', 'GiaReOnline', 650000, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
+(4, 'Installment', 'TraGop', 0, '2019-05-01 00:00:00', '2019-05-31 00:00:00'),
+(5, 'New Launch', 'MoiRaMat', 0, '2019-05-01 00:00:00', '2019-05-31 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `loaisanpham`
+-- Table structure for table `loaisanpham`
 --
 
 CREATE TABLE `loaisanpham` (
@@ -123,28 +123,28 @@ CREATE TABLE `loaisanpham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `loaisanpham`
+-- Dumping data for table `loaisanpham`
 --
 
 INSERT INTO `loaisanpham` (`MaLSP`, `TenLSP`, `HinhAnh`, `Mota`) VALUES
-(1, 'Apple', 'Apple.jpg', 'Các sản phẩm của Apple'),
-(2, 'Coolpad', 'Coolpad.png', 'Các sản phẩm của coolpad'),
-(3, 'HTC', 'HTC.jpg', 'Các sản phẩm đến từ HTC'),
-(4, 'Itel', 'Itel.jpg', 'Các sản phẩm của Itel'),
-(5, 'Mobell', 'Mobell.jpg', 'Các sản phẩm của mobell'),
-(6, 'Vivo', 'Vivo.jpg', 'Các sản phẩm của Vivo'),
-(7, 'Oppo', 'Oppo.jpg', 'Camara Selphi cuc chat tu Oppo'),
-(8, 'SamSung', 'Samsung.jpg', 'Khuyen mai lon tu SamSung'),
-(9, 'Phillips', 'Philips.jpg', 'Cac san pham tuyet dep tu Phillip'),
-(10, 'Nokia', 'Nokia.jpg', 'Các sản phẩm đến từ thương hiệu Nokia'),
+(1, 'Apple', 'Apple.jpg', 'Apple products'),
+(2, 'Coolpad', 'Coolpad.png', 'Coolpad products'),
+(3, 'HTC', 'HTC.jpg', 'Products from HTC'),
+(4, 'Itel', 'Itel.jpg', 'Itel products'),
+(5, 'Mobell', 'Mobell.jpg', 'Mobell products'),
+(6, 'Vivo', 'Vivo.jpg', 'Vivo products'),
+(7, 'Oppo', 'Oppo.jpg', 'Excellent selfie camera from Oppo'),
+(8, 'SamSung', 'Samsung.jpg', 'Big promotions from Samsung'),
+(9, 'Phillips', 'Philips.jpg', 'Beautiful products from Philips'),
+(10, 'Nokia', 'Nokia.jpg', 'Products from Nokia brand'),
 (11, 'Motorola', 'Motorola.jpg', 'Motorola is the best'),
-(12, 'Mobiistar', 'Mobiistar.jpg', 'Các sản phẩm đến từ thương hiệu Mobiistar'),
-(14, 'Xiaomi', 'Xiaomi.png', 'Các sản phẩm đến từ thương hiệu Xiaomi');
+(12, 'Mobiistar', 'Mobiistar.jpg', 'Products from Mobiistar brand'),
+(14, 'Xiaomi', 'Xiaomi.png', 'Products from Xiaomi brand');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nguoidung`
+-- Table structure for table `nguoidung`
 --
 
 CREATE TABLE `nguoidung` (
@@ -162,7 +162,7 @@ CREATE TABLE `nguoidung` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nguoidung`
+-- Dumping data for table `nguoidung`
 --
 
 INSERT INTO `nguoidung` (`MaND`, `Ho`, `Ten`, `GioiTinh`, `SDT`, `Email`, `DiaChi`, `TaiKhoan`, `MatKhau`, `MaQuyen`, `TrangThai`) VALUES
@@ -173,7 +173,7 @@ INSERT INTO `nguoidung` (`MaND`, `Ho`, `Ten`, `GioiTinh`, `SDT`, `Email`, `DiaCh
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `phanquyen`
+-- Table structure for table `phanquyen`
 --
 
 CREATE TABLE `phanquyen` (
@@ -183,16 +183,16 @@ CREATE TABLE `phanquyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `phanquyen`
+-- Dumping data for table `phanquyen`
 --
 
 INSERT INTO `phanquyen` (`MaQuyen`, `TenQuyen`, `ChiTietQuyen`) VALUES
-(1, 'Customer', 'Khách hàng có tài khoản');
+(1, 'Customer', 'Customer with account');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sanpham`
+-- Table structure for table `sanpham`
 --
 
 CREATE TABLE `sanpham` (
@@ -218,7 +218,7 @@ CREATE TABLE `sanpham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `sanpham`
+-- Dumping data for table `sanpham`
 --
 
 INSERT INTO `sanpham` (`MaSP`, `MaLSP`, `TenSP`, `DonGia`, `SoLuong`, `HinhAnh`, `MaKM`, `ManHinh`, `HDH`, `CamSau`, `CamTruoc`, `CPU`, `Ram`, `Rom`, `SDCard`, `Pin`, `SoSao`, `SoDanhGia`, `TrangThai`) VALUES
@@ -263,56 +263,56 @@ INSERT INTO `sanpham` (`MaSP`, `MaLSP`, `TenSP`, `DonGia`, `SoLuong`, `HinhAnh`,
 (49, 1, 'iPhone 8 Plus 256GB', 25790000, 10, 'https://cdn.tgdd.vn/Products/Images/42/114114/iphone-8-plus-256gb-red-600x600.jpg', 2, 'LED-backlit IPS LCD, 4.7\', Retina HD', 'iOS 11', '12 MP', '7 MP', 'Apple A11 Bionic 6 nhân', '2 GB', '256 GB', 'Không', '1821 mAh, có sạc nhanh', 0, 0, 1);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `chitiethoadon`
+-- Indexes for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD KEY `MaHD` (`MaHD`),
   ADD KEY `MaSP` (`MaSP`);
 
 --
--- Chỉ mục cho bảng `danhgia`
+-- Indexes for table `danhgia`
 --
 ALTER TABLE `danhgia`
   ADD KEY `MaSP` (`MaSP`);
 
 --
--- Chỉ mục cho bảng `hoadon`
+-- Indexes for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`MaHD`),
   ADD KEY `MaKH` (`MaND`);
 
 --
--- Chỉ mục cho bảng `khuyenmai`
+-- Indexes for table `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
   ADD PRIMARY KEY (`MaKM`);
 
 --
--- Chỉ mục cho bảng `loaisanpham`
+-- Indexes for table `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
   ADD PRIMARY KEY (`MaLSP`);
 
 --
--- Chỉ mục cho bảng `nguoidung`
+-- Indexes for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
   ADD PRIMARY KEY (`MaND`),
   ADD KEY `MaQuyen` (`MaQuyen`);
 
 --
--- Chỉ mục cho bảng `phanquyen`
+-- Indexes for table `phanquyen`
 --
 ALTER TABLE `phanquyen`
   ADD PRIMARY KEY (`MaQuyen`);
 
 --
--- Chỉ mục cho bảng `sanpham`
+-- Indexes for table `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD PRIMARY KEY (`MaSP`),
@@ -320,76 +320,76 @@ ALTER TABLE `sanpham`
   ADD KEY `MaKM` (`MaKM`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `hoadon`
+-- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
   MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `khuyenmai`
+-- AUTO_INCREMENT for table `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
   MODIFY `MaKM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `loaisanpham`
+-- AUTO_INCREMENT for table `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
   MODIFY `MaLSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT cho bảng `nguoidung`
+-- AUTO_INCREMENT for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
   MODIFY `MaND` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `phanquyen`
+-- AUTO_INCREMENT for table `phanquyen`
 --
 ALTER TABLE `phanquyen`
   MODIFY `MaQuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `sanpham`
+-- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
   MODIFY `MaSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `chitiethoadon`
+-- Constraints for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`),
   ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`);
 
 --
--- Các ràng buộc cho bảng `danhgia`
+-- Constraints for table `danhgia`
 --
 ALTER TABLE `danhgia`
   ADD CONSTRAINT `danhgia_ibfk_1` FOREIGN KEY (`MaSP`) REFERENCES `sanpham` (`MaSP`);
 
 --
--- Các ràng buộc cho bảng `hoadon`
+-- Constraints for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaND`) REFERENCES `nguoidung` (`MaND`);
 
 --
--- Các ràng buộc cho bảng `nguoidung`
+-- Constraints for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
   ADD CONSTRAINT `nguoidung_ibfk_1` FOREIGN KEY (`MaQuyen`) REFERENCES `phanquyen` (`MaQuyen`);
 
 --
--- Các ràng buộc cho bảng `sanpham`
+-- Constraints for table `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`MaLSP`) REFERENCES `loaisanpham` (`MaLSP`),

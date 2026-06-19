@@ -4,13 +4,13 @@
     if(!isset($_POST['request']) && !isset($_GET['request'])) die(null);
 
     switch ($_POST['request']) {
-    	// lấy tất cả sản phẩm
+    	// get all products
     	case 'getall':
 				$dssp = (new SanPhamBUS())->select_all();
                 for($i = 0; $i < sizeof($dssp); $i++) {
-                    // thêm thông tin khuyến mãi
+                    // add promotion info
                     $dssp[$i]["KM"] = (new KhuyenMaiBUS())->select_by_id('*', $dssp[$i]['MaKM']);
-                    // thêm thông tin hãng
+                    // add brand info
                     $dssp[$i]["LSP"] = (new LoaiSanPhamBUS())->select_by_id('*', $dssp[$i]['MaLSP']);
                 }
 		    	die (json_encode($dssp));
@@ -18,7 +18,7 @@
 
         case 'getbyid':
             $sp = (new SanPhamBUS())->select_by_id("*", $_POST['id']);
-            // thêm thông tin khuyến mãi và hãng
+            // add promotion and brand info
             $sp["KM"] = (new KhuyenMaiBUS())->select_by_id('*', $sp['MaKM']);
             $sp["LSP"] = (new LoaiSanPhamBUS())->select_by_id('*', $sp['MaLSP']);
 
@@ -37,9 +37,9 @@
             $result = (new DB_driver())->get_list($sql);
             
             for($i = 0; $i < sizeof($result); $i++) {
-                // thêm thông tin khuyến mãi
+            // add promotion info
                 $result[$i]["KM"] = (new KhuyenMaiBUS())->select_by_id('*', $result[$i]['MaKM']);
-                // thêm thông tin hãng
+            // add brand info
                 $result[$i]["LSP"] = (new LoaiSanPhamBUS())->select_by_id('*', $result[$i]['MaLSP']);
             }
 
@@ -54,7 +54,7 @@
             addFromWeb1();
             break;
 
-        //thêm
+        //add
         case 'add':
                 $data = $_POST['dataAdd'];
                 $spAddArr = array(
@@ -83,7 +83,7 @@
                 die (json_encode($spBUS->add_new($spAddArr)));
             break;
 
-        // xóa
+        // delete
         case 'delete':
                 $spBUS = new SanPhamBUS();
                 $maSPDel = $_POST['maspdelete'];
@@ -127,7 +127,7 @@
                     $giaTu = (int)$prices[0];
                     $giaDen = (int)$prices[1];
 
-                    // nếu giá đến = 0 thì cho giá đến = 100 triệu
+                    // if max price = 0 then set max price to 100 million
                     if($giaDen == 0) $giaDen = 1000000000;
 
                     $sql .= ($sql==$ori?"":" AND ") . " DonGia >= $giaTu AND DonGia <= $giaDen";
@@ -144,7 +144,7 @@
                     break;
 
                 case 'promo':
-                    // lấy id khuyến mãi
+                    // get promotion id
                     $loaikm = $dauBang[1];
                     $khuyenmai = (new DB_driver())->get_row("SELECT * FROM KhuyenMai WHERE LoaiKM='$loaikm'");
                     $khuyenmaiID = $khuyenmai["MaKM"];
@@ -168,29 +168,29 @@
             }
         }
 
-        // sort phải để cuối
+        // sort must be at the end
         if($tenThanhPhanCanSort != null && $typeSort != null) {
-            $sql .= ($sql==$ori?" 1=1 ":""); // fix lỗi dư chữ AND 
+            $sql .= ($sql==$ori?" 1=1 ":""); // fix extra AND keyword 
             $sql .= " ORDER BY $tenThanhPhanCanSort $typeSort";
         }
 
-        // Phân trang
-        // if($page != 0 || $page == null) { // nếu == 0 thì trả về hết
-        //     if($page == null) $page = 1; // mặc định là trang 1 (nếu không ghi gì hết)
-        //     $productsPerPage = 10; // số lượng sản phẩm trong 1 trang
+        // Pagination
+        // if($page != 0 || $page == null) { // if == 0 then return all
+        //     if($page == null) $page = 1; // default is page 1 (if nothing is specified)
+        //     $productsPerPage = 10; // number of products per page
         //     $startIndex = ($page-1)*$productsPerPage;
-        //     $sql .= ($sql==$ori?" 1=1 ":""); // fix lỗi dư chữ where
+        //     $sql .= ($sql==$ori?" 1=1 ":""); // fix extra where keyword
         //     $sql .= " LIMIT $startIndex,$productsPerPage";
         // }
 
-        // chạy sql
+        // run sql
         $result = $db->get_list($sql);
         $db->dis_connect();
 
         for($i = 0; $i < sizeof($result); $i++) {
-            // thêm thông tin khuyến mãi
+            // add promotion info
             $result[$i]["KM"] = (new KhuyenMaiBUS())->select_by_id('*', $result[$i]['MaKM']);
-            // thêm thông tin hãng
+            // add brand info
             $result[$i]["LSP"] = (new LoaiSanPhamBUS())->select_by_id('*', $result[$i]['MaLSP']);
         }
         die (json_encode($result));

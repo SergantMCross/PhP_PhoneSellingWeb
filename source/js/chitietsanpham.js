@@ -1,11 +1,11 @@
-var nameProduct, maProduct; // Tên sản phẩm trong trang này, 
-// // là biến toàn cục để có thể dùng ở bát cứ đâu trong trang
-// // không cần tính toán lấy tên từ url nhiều lần
+var nameProduct, maProduct; // Product name in this page, 
+// // global variable to be used anywhere in the page
+// // no need to get name from url multiple times
 
 window.onload = function() {
     khoiTao();
 
-    // thêm tags (từ khóa) vào khung tìm kiếm
+    // add tags (keywords) to search box
     var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
     for (var t of tags) addTags(t, "index.php?search=" + t, true);
 
@@ -14,14 +14,14 @@ window.onload = function() {
 
 // ======================= Web 2 =======================
 function phanTichURL_Web2() {
-    maProduct = window.location.href.split('?')[1]; // lấy tên
-    if (!maProduct) return; // nếu không tìm thấy tên thì thoát hàm
+    maProduct = window.location.href.split('?')[1]; // get name
+    if (!maProduct) return; // if no name found, exit function
 
     $.ajax({
         type: "POST",
         url: "php/xulysanpham.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getbyid",
             id: maProduct
@@ -34,7 +34,7 @@ function phanTichURL_Web2() {
         error: function(e) {
             Swal.fire({
                 type: "error",
-                title: "Lỗi lấy sản phẩm (chitietSanpham.js > phanTichURL_Web2)",
+                title: "Error loading product (chitietSanpham.js > phanTichURL_Web2)",
                 html: e.responseText
             });
         }
@@ -44,24 +44,24 @@ function phanTichURL_Web2() {
 function addChiTietToWeb(p) {
     var divChiTiet = document.getElementsByClassName('chitietSanpham')[0];
 
-    // Đổi title
-    document.title = p.TenSP + ' - Thế giới điện thoại';
+    // Change title
+    document.title = p.TenSP + ' - Smartphone Store';
 
-    // Cập nhật tên h1
+    // Update h1 name
     var h1 = divChiTiet.getElementsByTagName('h1')[0];
     h1.innerHTML += p.TenSP;
 
-    // Cập nhật sao
+    // Update stars
     var rating = "";
     if (p.SoSao > 0) {
         rating = getRateStar(p.SoSao);
-        rating += `<span> ` + p.SoDanhGia + ` đánh giá </span>`;
+        rating += `<span> ` + p.SoDanhGia + ` reviews </span>`;
     }
     divChiTiet.getElementsByClassName('rating')[0].innerHTML += rating;
 
-    // Cập nhật giá + label khuyến mãi
+    // Update price + promotion label
     var area_price = divChiTiet.getElementsByClassName('area_price')[0];
-    // Chuyển giá tiền sang dạng tag html
+    // Convert price to html tag format
     var giaTri = parseInt(p.DonGia);
     var giaTrikhuyenMai = parseInt(p.KM.GiaTriKM);
     var giaTriSauKM = giaTri - giaTrikhuyenMai;
@@ -75,34 +75,34 @@ function addChiTietToWeb(p) {
 
         area_price.innerHTML += promoToWeb(p.KM.LoaiKM, giaTriSauKM);
     } else {
-        document.getElementsByClassName('ship')[0].style.display = ''; // hiển thị 'giao hàng trong 1 giờ'
+        document.getElementsByClassName('ship')[0].style.display = ''; // show 'delivery within 1 hour'
         
         khuyenmaidiv = promoToWeb(p.KM.LoaiKM, giaTrikhuyenMai);
         area_price.innerHTML = `<strong>` + giaTri.toLocaleString() + `&#8363;</strong>` + khuyenmaidiv;
     }
 
-    // Cập nhật chi tiết khuyến mãi
+    // Update promotion details
     document.getElementById('detailPromo').innerHTML = getDetailPromo(p);
 
-    // Cập nhật thông số
+    // Update specifications
     var info = document.getElementsByClassName('info')[0];
-    var s = addThongSo('Màn hình', p.ManHinh);
-    s += addThongSo('Hệ điều hành', p.HDH);
-    s += addThongSo('Camara sau', p.CamSau);
-    s += addThongSo('Camara trước', p.CamTruoc);
+    var s = addThongSo('Screen', p.ManHinh);
+    s += addThongSo('Operating System', p.HDH);
+    s += addThongSo('Rear Camera', p.CamSau);
+    s += addThongSo('Front Camera', p.CamTruoc);
     s += addThongSo('CPU', p.CPU);
     s += addThongSo('RAM', p.Ram);
-    s += addThongSo('Bộ nhớ trong', p.Rom);
-    s += addThongSo('Thẻ nhớ', p.SDCard);
-    s += addThongSo('Dung lượng pin', p.Pin);
+    s += addThongSo('Internal Storage', p.Rom);
+    s += addThongSo('Memory Card', p.SDCard);
+    s += addThongSo('Battery Capacity', p.Pin);
     info.innerHTML = s;
 
-    // Cập nhật hình
+    // Update image
     var hinh = divChiTiet.getElementsByClassName('picture')[0];
     hinh = hinh.getElementsByTagName('img')[0];
     hinh.src = p.HinhAnh;
 
-    // Test bình luận
+    // Test comments
     refreshBinhLuan();
 }
 
@@ -110,12 +110,12 @@ function checkGuiBinhLuan() {
     getCurrentUser((user) => {
         if(user == null) {
             Swal.fire({
-                title: 'Xin chào!',
-                text: 'Bạn cần đăng nhập để binh luận',
+                title: 'Hello!',
+                text: 'You need to login to comment',
                 type: 'error',
                 grow: 'row',
-                confirmButtonText: 'Đăng nhập',
-                cancelButtonText: 'Trở về',
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Go back',
                 showCancelButton: true
             }).then((result) => {
                 if (result.value) {
@@ -128,8 +128,8 @@ function checkGuiBinhLuan() {
 
     }, (error) => {
         Swal.fire({
-            title: 'Lỗi!',
-            text: 'Có lỗi khi đăng đánh giá',
+            title: 'Error!',
+            text: 'Error posting review',
             type: 'error',
             grow: 'row'
         })
@@ -142,8 +142,8 @@ function guiBinhLuan(nguoidung) {
 
     if(!soSao) {
         Swal.fire({
-            title: 'Thiếu!',
-            text: 'Bạn vui lòng đánh số sao',
+            title: 'Missing!',
+            text: 'Please select star rating',
             type: 'warning',
             grow: 'row'
         })
@@ -152,8 +152,8 @@ function guiBinhLuan(nguoidung) {
 
     if(!binhLuan) {
         Swal.fire({
-            title: 'Thiếu!',
-            text: 'Bạn vui lòng để lại bình luận',
+            title: 'Missing!',
+            text: 'Please leave a comment',
             type: 'warning',
             grow: 'row'
         })
@@ -166,7 +166,7 @@ function guiBinhLuan(nguoidung) {
         type: "POST",
         url: "php/xulydanhgia.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "thembinhluan",
             masp: maProduct,
@@ -190,7 +190,7 @@ function refreshBinhLuan() {
         type: "POST",
         url: "php/xulydanhgia.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getbinhluan",
             masp: maProduct
@@ -222,28 +222,28 @@ function getRateStar(num) {
     return result;
 }
 
-// Chi tiết khuyến mãi
+// Promotion details
 function getDetailPromo(sp) {
     switch (sp.KM.LoaiKM) {
         case 'tragop':
-            var span = `<span style="font-weight: bold"> lãi suất ` + sp.KM.GiaTriKM + `% </span>`;
-            return `Khách hàng có thể mua trả góp sản phẩm với ` + span + `với thời hạn 6 tháng kể từ khi mua hàng.`;
+            var span = `<span style="font-weight: bold"> interest rate ` + sp.KM.GiaTriKM + `% </span>`;
+            return `Customers can purchase this product on installment with ` + span + `for a term of 6 months from purchase date.`;
 
         case 'giamgia':
             var span = `<span style="font-weight: bold">` + Number(sp.KM.GiaTriKM).toLocaleString() + `</span>`;
-            return `Khách hàng sẽ được giảm ` + span + `₫ khi tới mua trực tiếp tại cửa hàng`;
+            return `Customers will get a discount of ` + span + `₫ when purchasing directly at the store`;
 
         case 'moiramat':
-            return `Khách hàng sẽ được thử máy miễn phí tại cửa hàng. Có thể đổi trả lỗi trong vòng 2 tháng.`;
+            return `Customers can try the device for free at the store. Defective returns accepted within 2 months.`;
 
         case 'giareonline':
             var del = Number(p.DonGia) - Number(p.KM.GiaTriKM);
             var span = `<span style="font-weight: bold">` + numToString(del) + `</span>`;
-            return `Sản phẩm sẽ được giảm ` + span + `₫ khi mua hàng online bằng thẻ VPBank hoặc tin nhắn SMS`;
+            return `Product will be discounted ` + span + `₫ when purchasing online with VPBank card or SMS`;
 
         default:
-            var span = `<span style="font-weight: bold">61 xe Wave Alpha</span>`;
-            return `Cơ hội trúng ` + span + ` khi trả góp Home Credit`;
+            var span = `<span style="font-weight: bold">61 Wave Alpha motorbike</span>`;
+            return `Chance to win ` + span + ` with Home Credit installment`;
     }
 }
 
@@ -263,7 +263,7 @@ function createComment(name, value, star, time) {
             </div>`;
 }
 
-/*// add hình
+/*// add image
 function addSmallImg(img) {
     var newDiv = `<div class='item'>
                         <a>
@@ -274,7 +274,7 @@ function addSmallImg(img) {
     banner.innerHTML += newDiv;
 }
 
-// đóng mở xem hình
+// open/close view image
 function opencertain() {
     document.getElementById("overlaycertainimg").style.transform = "scale(1)";
 }
@@ -283,7 +283,7 @@ function closecertain() {
     document.getElementById("overlaycertainimg").style.transform = "scale(0)";
 }
 
-// đổi hình trong chế độ xem hình
+// change image in image view mode
 function changepic(src) {
     document.getElementById("bigimg").src = src;
 }*/

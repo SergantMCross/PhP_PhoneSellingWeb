@@ -1,11 +1,11 @@
 var currentUser;
-var tongTienTatCaDonHang = 0; // lưu tổng tiền từ tất cả các đơn hàng đã mua
+var tongTienTatCaDonHang = 0; // store total amount from all purchased orders
 var tongSanPhamTatCaDonHang = 0;
 
 window.onload = function () {
     khoiTao();
 
-    // thêm tags (từ khóa) vào khung tìm kiếm
+    // add tags (keywords) to search box
     var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
     for (var t of tags) addTags(t, "index.php?search=" + t);
 
@@ -25,7 +25,7 @@ window.onload = function () {
 
         } else {
             var warning = `<h2 style="color: red; font-weight:bold; text-align:center; font-size: 2em; padding: 50px;">
-                            Bạn chưa đăng nhập !!
+                            You are not logged in!!
                         </h2>`;
             document.getElementsByClassName('infoUser')[0].innerHTML = warning;
         }
@@ -51,24 +51,24 @@ function xemChiTiet(mahd) {
     });
 }
 
-// Phần Thông tin người dùng
+// User information section
 function addInfoUser(user) {
     if (!user) return;
     document.getElementsByClassName('infoUser')[0].innerHTML = `
     <hr>
     <table>
         <tr>
-            <th colspan="3">THÔNG TIN KHÁCH HÀNG</th>
+            <th colspan="3">CUSTOMER INFORMATION</th>
         </tr>
         <tr>
-            <td>Tài khoản: </td>
+            <td>Username: </td>
             <td> <input type="text" value="` + user.username + `" readonly> </td>
             <td> <i class="fa fa-pencil" onclick="changeInfo(this, 'username')"></i> </td>
         </tr>
         <tr>
-            <td>Mật khẩu: </td>
+            <td>Password: </td>
             <td style="text-align: center;"> 
-                <i class="fa fa-pencil" id="butDoiMatKhau" onclick="openChangePass()"> Đổi mật khẩu</i> 
+                <i class="fa fa-pencil" id="butDoiMatKhau" onclick="openChangePass()"> Change password</i> 
             </td>
             <td></td>
         </tr>
@@ -76,33 +76,33 @@ function addInfoUser(user) {
             <td colspan="3" id="khungDoiMatKhau">
                 <table>
                     <tr>
-                        <td> <div>Mật khẩu cũ:</div> </td>
+                        <td> <div>Old password:</div> </td>
                         <td> <div><input type="password"></div> </td>
                     </tr>
                     <tr>
-                        <td> <div>Mật khẩu mới:</div> </td>
+                        <td> <div>New password:</div> </td>
                         <td> <div><input type="password"></div> </td>
                     </tr>
                     <tr>
-                        <td> <div>Xác nhận mật khẩu:</div> </td>
+                        <td> <div>Confirm password:</div> </td>
                         <td> <div><input type="password"></div> </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td> 
-                            <div><button onclick="changePass()">Đồng ý</button></div> 
+                            <div><button onclick="changePass()">Confirm</button></div> 
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
-            <td>Họ: </td>
+            <td>Last name: </td>
             <td> <input type="text" value="` + user.ho + `" readonly> </td>
             <td> <i class="fa fa-pencil" onclick="changeInfo(this, 'ho')"></i> </td>
         </tr>
         <tr>
-            <td>Tên: </td>
+            <td>First name: </td>
             <td> <input type="text" value="` + user.ten + `" readonly> </td>
             <td> <i class="fa fa-pencil" onclick="changeInfo(this, 'ten')"></i> </td>
         </tr>
@@ -115,12 +115,12 @@ function addInfoUser(user) {
             <td colspan="3" style="padding:5px; border-top: 2px solid #ccc;"></td>
         </tr>
         <tr>
-            <td>Tổng tiền đã mua: </td>
+            <td>Total spent: </td>
             <td> <input type="text" value="` + numToString(tongTienTatCaDonHang) + `₫" readonly> </td>
             <td></td>
         </tr>
         <tr>
-            <td>Số lượng sản phẩm đã mua: </td>
+            <td>Products purchased: </td>
             <td> <input type="text" value="` + tongSanPhamTatCaDonHang + `" readonly> </td>
             <td></td>
         </tr>
@@ -140,7 +140,7 @@ function changePass() {
     if (inps[0].value != currentUser.pass) {
         Swal.fire({
             type: 'error',
-            title: 'Sai mật khẩu'
+            title: 'Wrong password'
         }).then((result) => {
             inps[0].focus();
         });
@@ -149,14 +149,14 @@ function changePass() {
     if (inps[1] == '') {
         Swal.fire({
             type: 'error',
-            title: 'Chưa nhập mật khẩu mới !'
+            title: 'New password not entered!'
         })
         inps[1].focus();
     }
     if (inps[1].value != inps[2].value) {
         Swal.fire({
             type: 'error',
-            title: 'Mật khẩu không khớp'
+            title: 'Passwords do not match'
         }).then((result) => {
             inps[2].focus();
         });
@@ -166,45 +166,45 @@ function changePass() {
     var temp = copyObject(currentUser);
     currentUser.pass = inps[1].value;
 
-    // cập nhật danh sách sản phẩm trong localstorage
+    // update product list in localstorage
     setCurrentUser(currentUser);
     updateListUser(temp, currentUser);
 
-    // Cập nhật trên header
+    // Update on header
     capNhat_ThongTin_CurrentUser();
 
-    // thông báo
+    // notification
     Swal.fire({
         type: 'success',
-        title: 'Xong',
-        text: 'Thay đổi mật khẩu thành công.'
+        title: 'Done',
+        text: 'Password changed successfully.'
     }).then((result) => {
         inps[0].value = inps[1].value = inps[2].value = "";
         openChangePass();    
     });
-    // addAlertBox('Thay đổi mật khẩu thành công.', '#5f5', '#000', 4000);
+    // addAlertBox('Password changed successfully.', '#5f5', '#000', 4000);
 }
 
 function changeInfo(iTag, info) {
     var inp = iTag.parentElement.previousElementSibling.getElementsByTagName('input')[0];
 
-    // Đang hiện
+    // Currently showing
     if (!inp.readOnly && inp.value != '') {
 
         if (info == 'username') {
             var users = getListUser();
             for (var u of users) {
                 if (u.username == inp.value && u.username != currentUser.username) {
-                    alert('Tên đã có người sử dụng !!');
+                    alert('Username already taken!!');
                     inp.value = currentUser.username;
                     return;
                 }
             }
-            // Đổi tên trong list đơn hàng
+            // Change name in order list
             if (!currentUser.donhang.length) {
                 document.getElementsByClassName('listDonHang')[0].innerHTML = `
                     <h3 style="width=100%; padding: 50px; color: green; font-size: 2em; text-align: center"> 
-                        Xin chào ` + inp.value + `. Bạn chưa có đơn hàng nào.
+                        Hello ` + inp.value + `. You have no orders yet.
                     </h3>`;
             }
 
@@ -213,7 +213,7 @@ function changeInfo(iTag, info) {
             var users = getListUser();
             for (var u of users) {
                 if (u.email == inp.value && u.username != currentUser.username) {
-                    alert('Email đã có người sử dụng !!');
+                    alert('Email already in use!!');
                     inp.value = currentUser.email;
                     return;
                 }
@@ -223,17 +223,17 @@ function changeInfo(iTag, info) {
         var temp = copyObject(currentUser);
         currentUser[info] = inp.value;
 
-        // cập nhật danh sách sản phẩm trong localstorage
+        // update product list in localstorage
         setCurrentUser(currentUser);
         updateListUser(temp, currentUser);
 
-        // Cập nhật trên header
+        // Update on header
         capNhat_ThongTin_CurrentUser();
 
         iTag.innerHTML = '';
 
     } else {
-        iTag.innerHTML = 'Đồng ý';
+        iTag.innerHTML = 'Confirm';
         inp.focus();
         var v = inp.value;
         inp.value = '';
@@ -244,19 +244,19 @@ function changeInfo(iTag, info) {
 }
 
 
-// Phần thông tin đơn hàng
+// Order information section
 function addTatCaDonHang(user) {
     if (!user) {
         document.getElementsByClassName('listDonHang')[0].innerHTML = `
             <h3 style="width=100%; padding: 50px; color: red; font-size: 2em; text-align: center"> 
-                Bạn chưa đăng nhập !!
+                You are not logged in!!
             </h3>`;
         return;
     }
     if (!user.donhang.length) {
         document.getElementsByClassName('listDonHang')[0].innerHTML = `
             <h3 style="width=100%; padding: 50px; color: green; font-size: 2em; text-align: center"> 
-                Xin chào ` + currentUser.username + `. Bạn chưa có đơn hàng nào.
+                Hello ` + currentUser.username + `. You have no orders yet.
             </h3>`;
         return;
     }
@@ -272,16 +272,16 @@ function addDonHang(dh) {
             <table class="listSanPham">
                 <tr> 
                     <th colspan="6">
-                        <h3 style="text-align:center;"> Đơn hàng ngày: ` + new Date(dh.ngaymua).toLocaleString() + `</h3> 
+                        <h3 style="text-align:center;"> Order date: ` + new Date(dh.ngaymua).toLocaleString() + `</h3> 
                     </th>
                 </tr>
                 <tr>
-                    <th>STT</th>
-                    <th>Sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Thành tiền</th>
-                    <th>Thời gian thêm vào giỏ</th> 
+                    <th>No.</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Added to cart</th> 
                 </tr>`;
 
     var totalPrice = 0;
@@ -297,7 +297,7 @@ function addDonHang(dh) {
                 <tr>
                     <td>` + (i + 1) + `</td>
                     <td class="noPadding imgHide">
-                        <a target="_blank" href="chitietsanpham.php?` + p.name.split(' ').join('-') + `" title="Xem chi tiết">
+                        <a target="_blank" href="chitietsanpham.php?` + p.name.split(' ').join('-') + `" title="View details">
                             ` + p.name + `
                             <img src="` + p.img + `">
                         </a>
@@ -317,7 +317,7 @@ function addDonHang(dh) {
 
     s += `
                 <tr style="font-weight:bold; text-align:center; height: 4em;">
-                    <td colspan="4">TỔNG TIỀN: </td>
+                    <td colspan="4">TOTAL: </td>
                     <td class="alignRight">` + numToString(totalPrice) + ` ₫</td>
                     <td > ` + dh.tinhTrang + ` </td>
                 </tr>

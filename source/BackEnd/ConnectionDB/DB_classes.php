@@ -1,7 +1,7 @@
 <?php
 require_once("DB_business.php");
 
-// hiển thị dạng <table> dữ liệu từ 1 bảng trong database 
+// display data from a database table as <table> 
 function show_DataBUS_as_Table($bus)
 {
     echo "<table cellspacing='15'>";
@@ -15,7 +15,7 @@ function show_DataBUS_as_Table($bus)
     echo "</table>";
 }
 
-// Lớp sản phẩm
+// Product class
 class SanPhamBUS extends DB_business
 {
     function __construct()
@@ -31,11 +31,11 @@ class SanPhamBUS extends DB_business
     }
 
     function themDanhGia($id) {
-        // cập nhật số lượt đánh giá
+        // update review count
         $sanpham = $this->select_by_id("*", $id);
         $sanpham["SoDanhGia"] = $sanpham["SoDanhGia"] + 1;
 
-        // cập nhật số sao trung bình
+        // update average star rating
         $dsbl = (new DB_driver())->get_list("SELECT * FROM danhgia WHERE MaSP=$id");
         $tongSoSao = 0;
         for($i = 0; $i < sizeof($dsbl); $i++) {
@@ -47,7 +47,7 @@ class SanPhamBUS extends DB_business
     }
 }
 
-// Lớp loại sản phẩm
+// Product category class
 class LoaiSanPhamBUS extends DB_business
 {
     function __construct()
@@ -56,7 +56,7 @@ class LoaiSanPhamBUS extends DB_business
     }
 }
 
-// Lớp chi tiết sản phẩm
+// Product detail class
 class ChiTietSanPhamBUS extends DB_business
 {
     function __construct()
@@ -65,7 +65,7 @@ class ChiTietSanPhamBUS extends DB_business
     }
 }
 
-// Lớp người dùng
+// User class
 class NguoiDungBUS extends DB_business
 {
     function __construct()
@@ -76,14 +76,14 @@ class NguoiDungBUS extends DB_business
     function add_new($data)
     {
         // check
-        // username trung, email trung
+        // duplicate username, duplicate email
         
-        // them
+        // add
         parent::add_new($data);
     }
 }
 
-// Lớp hóa đơn
+// Invoice class
 class HoaDonBUS extends DB_business
 {
     function __construct()
@@ -97,7 +97,7 @@ class HoaDonBUS extends DB_business
     }
 }
 
-// Lớp tài khoản
+// Account class
 class TaiKhoanBUS extends DB_business
 {
     function __construct()
@@ -106,7 +106,7 @@ class TaiKhoanBUS extends DB_business
     }
 }
 
-// Lớp phân quyền
+// Permission class
 class PhanQuyenBUS extends DB_business
 {
     function __construct()
@@ -115,7 +115,7 @@ class PhanQuyenBUS extends DB_business
     }
 }
 
-// Lớp khuyến mãi
+// Promotion class
 class KhuyenMaiBUS extends DB_business
 {
     function __construct()
@@ -124,7 +124,7 @@ class KhuyenMaiBUS extends DB_business
     }
 }
 
-// Lớp chi tiết hóa đơn , có 2 khóa chính
+// Invoice detail class, has 2 primary keys
 class ChiTietHoaDonBUS extends DB_business
 {
     protected $key2;
@@ -135,26 +135,26 @@ class ChiTietHoaDonBUS extends DB_business
         $this->_key2 = "MaSP";
     }
 
-    // Hàm xóa theo id hóa đơn và id sản phẩm
+    // Delete by invoice ID and product ID
     function delete_by_2id($id, $id2)
     {
         return $this->remove($this->_table_name, $this->_key . "='" . $id . "' AND " . $this->_key2 . "='" . $id2 . "'");
     }
 
-    // Hàm cập nhật theo id hóa đơn + id sản phẩm
+    // Update by invoice ID + product ID
     function update_by_2id($data, $id, $id2)
     {
         return $this->update($this->_table_name, $data, $this->_key . "='" . $id . "' AND " . $this->_key2 . "='" . $id2 . "'");
     }
 
-    // hàm select theo id hóa đơn + id sản phẩm
+    // select by invoice ID + product ID
     function select_by_2id($select, $id, $id2)
     {
         $sql = "select $select from " . $this->_table_name . " where " . $this->_key . " = '" . $id . "' AND " . $this->_key2 . "='" . $id2 . "'";
         return $this->get_row($sql);
     }
 
-    // hàm get all chi tiết có mã hóa đơn truyền vào
+    // get all details with given invoice ID
     function select_all_in_hoadon($id)
     {
         $sql = "select * from " . $this->_table_name . " where " . $this->_key . " ='" . $id . "'";

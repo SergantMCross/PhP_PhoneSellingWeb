@@ -11,16 +11,16 @@
 		if(sizeof($dsdh) > 0) {
 			echo '<table class="table table-striped" >
 				<tr style="text-align:center;vertical-align:middle;font-size:20px;background-color:coral;color:black!important">
-				<th  style="font-weight:600">Mã đơn hàng</th>
-				<th  style="font-weight:600">Mã người dùng</th>
-				<th  style="font-weight:600">Ngày lập</th>
-				<th  style="font-weight:600">Người nhận</th>
-				<th  style="font-weight:600">SDT</th>
-				<th  style="font-weight:600">Địa chỉ</th>
-				<th  style="font-weight:600">Phương thức TT</th>
-				<th  style="font-weight:600">Tổng tiền</th>
-				<th  style="font-weight:600">Trạng thái</th>
-				<th  style="font-weight:600">Xem chi tiết</th>
+				<th  style="font-weight:600">Order Code</th>
+				<th  style="font-weight:600">User Code</th>
+				<th  style="font-weight:600">Order Date</th>
+				<th  style="font-weight:600">Recipient</th>
+				<th  style="font-weight:600">Phone</th>
+				<th  style="font-weight:600">Address</th>
+				<th  style="font-weight:600">Payment Method</th>
+				<th  style="font-weight:600">Total</th>
+				<th  style="font-weight:600">Status</th>
+				<th  style="font-weight:600">View Details</th>
 			</tr>';
 
 			forEach($dsdh as $row) {
@@ -35,7 +35,7 @@
 						<td  style="text-align:center;vertical-align:middle;">'.$row["TongTien"].'</td>
 						<td  style="text-align:center;vertical-align:middle;">'.$row["TrangThai"].'</td>
 						<td  style="text-align:center;vertical-align:middle;">
-							<button data-toggle="modal" data-target="#exampleModal" onclick="xemChiTiet(\''.$row["MaHD"].'\')">Xem</button>
+							<button data-toggle="modal" data-target="#exampleModal" onclick="xemChiTiet(\''.$row["MaHD"].'\')">View</button>
 						</td>
 					</tr>'	;	
 			}
@@ -43,8 +43,8 @@
 
 		} else {
 			echo '<h2 style="color:green; text-align:center;">
-						Hiện chưa có đơn hàng nào, 
-						<a href="index.php" style="color:blue">Mua ngay</a>
+						No orders yet, 
+						<a href="index.php" style="color:blue">Shop now</a>
 					</h2>';
 		}
 	}

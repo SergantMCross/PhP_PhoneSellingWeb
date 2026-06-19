@@ -15,9 +15,9 @@
 
 		echo '<table class="table table-striped" >
 		<tr style="text-align:center;vertical-align:middle;font-size:20px;background-color:coral;color:black!important">
-			<th scope="col" style="font-weight:600">Sản phẩm</th>
-			<th scope="col" style="font-weight:600">Số lượng</th>
-			<th scope="col" style="font-weight:600">Đơn giá</th>
+			<th scope="col" style="font-weight:600">Product</th>
+			<th scope="col" style="font-weight:600">Quantity</th>
+			<th scope="col" style="font-weight:600">Unit Price</th>
 		</tr>';
 
 		forEach($dscthd as $row) {

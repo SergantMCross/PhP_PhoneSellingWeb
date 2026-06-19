@@ -1,4 +1,4 @@
-// Hàm khởi tạo, tất cả các trang đều cần
+// Initialization function, required by all pages
 function khoiTao() {
     setupEventTaiKhoan();
     capNhatThongTinUser();
@@ -6,14 +6,14 @@ function khoiTao() {
     document.getElementsByClassName('cart-number')[0].innerHTML = getSoLuongGioHang();;
 }
 
-// ========= Các hàm liên quan tới danh sách sản phẩm =========
-// copy 1 object, do trong js ko có tham biến , tham trị rõ ràng
-// nên dùng bản copy để chắc chắn ko ảnh hưởng tới bản chính
+// ========= Functions related to product list =========
+    // copy an object, since js doesn't have clear reference/value types
+    // use a copy to ensure the original is not affected
 function copyObject(o) {
     return JSON.parse(JSON.stringify(o));
 }
 
-// ================ Cart Number + Thêm vào Giỏ hàng ======================
+// ================ Cart Number + Add to Cart ======================
 function getListGioHang() {
     return JSON.parse(localStorage.getItem('giohang')); 
 }
@@ -61,7 +61,7 @@ function getSoLuongGioHang() {
 }
 
 function animateCartNumber() {
-    // Hiệu ứng cho icon giỏ hàng
+    // Animation for cart icon
     var cn = document.getElementsByClassName('cart-number')[0];
     cn.style.transform = 'scale(2)';
     cn.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
@@ -78,12 +78,12 @@ function themVaoGioHang(masp, tensp) {
     getCurrentUser((user) => {
         if(user && user.TrangThai == 0) {
             Swal.fire({
-                title: 'Tài Khoản Bị Khóa!',
-                text: 'Tài khoản của bạn hiện đang bị khóa nên không thể thêm hàng!',
+                title: 'Account Locked!',
+                text: 'Your account is currently locked so you cannot add items!',
                 type: 'error',
                 grow: 'row',
-                confirmButtonText: 'Trở về',
-                footer: '<a href>Liên hệ với Admin</a>'
+                confirmButtonText: 'Go back',
+                footer: '<a href>Contact Admin</a>'
             });
 
             return;
@@ -95,7 +95,7 @@ function themVaoGioHang(masp, tensp) {
                 toast: true,
                 position: 'bottom-end',
                 type: 'success',
-                html: ' Đã thêm <strong>' + tensp + '</strong> vào giỏ.',
+                html: ' Added <strong>' + tensp + '</strong> to cart.',
                 showConfirmButton: true,
                 timer: 5000
             })
@@ -109,15 +109,15 @@ function themVaoGioHang(masp, tensp) {
     return false;
 }
 
-// ============================== TÀI KHOẢN ============================
+// ============================== ACCOUNT ============================
 
-// Hàm get set cho người dùng hiện tại đã đăng nhập
+// Get/set functions for the currently logged in user
 function getCurrentUser(onSuccess, onFail) {
     $.ajax({
         type: "POST",
         url: "php/xulytaikhoan.php",
         dataType: "json",
-        timeout: 1500, // sau 1.5 giây mà không phản hồi thì dừng => hiện lỗi
+        timeout: 1500, // stop after 1.5 seconds with no response => show error
         data: {
             request: "getCurrentUser"
         },
@@ -130,15 +130,15 @@ function getCurrentUser(onSuccess, onFail) {
     })
 }
 
-// Hiển thị form tài khoản, giá trị truyền vào là true hoặc false
+// Show account form, pass true or false
 function showTaiKhoan(show) {
     var value = (show ? "scale(1)" : "scale(0)");
     var div = document.getElementsByClassName('containTaikhoan')[0];
     div.style.transform = value;
 }
 
-// Check xem có ai đăng nhập hay chưa (CurrentUser có hay chưa)
-// Hàm này chạy khi ấn vào nút tài khoản trên header
+// Check if anyone is logged in (CurrentUser exists or not)
+// This function runs when clicking the account button on the header
 function checkTaiKhoan() {
     getCurrentUser((data) => {
         if(!data) {
@@ -179,9 +179,9 @@ function checkDangKy() {
             if(kq != null) {
                 Swal.fire({
                     type: 'success',
-                    title: 'Đăng kí thành công ' + kq.TaiKhoan,
-                    text: 'Bạn sẽ được đăng nhập tự động',
-                    confirmButtonText: 'Tuyệt'
+                    title: 'Registration successful ' + kq.TaiKhoan,
+                    text: 'You will be logged in automatically',
+                    confirmButtonText: 'Great'
 
                 }).then((result) => {
                     capNhatThongTinUser();
@@ -192,7 +192,7 @@ function checkDangKy() {
         error: function(e) {
             Swal.fire({
                 type: "error",
-                title: "Lỗi",
+                title: "Error",
                 // html: e.responseText
             });
             console.log(e.responseText)
@@ -222,8 +222,8 @@ function checkDangNhap() {
             if(data != null) {
                 Swal.fire({
                     type: "success",
-                    title: "Đăng nhập thành công",
-                    text: "Chào " + data.Ho + " " + data.Ten
+                    title: "Login successful",
+                    text: "Hello " + data.Ho + " " + data.Ten
                 }).then((result) => {
                     capNhatThongTinUser();
                 });
@@ -232,14 +232,14 @@ function checkDangNhap() {
             } else {
                 Swal.fire({
                     type: "error",
-                    title: "Tên tài khoản hoăc mật khẩu không đúng"
+                    title: "Incorrect username or password"
                 });
             }
         },
         error: function(e) {
             Swal.fire({
                 type: "error",
-                title: "Lỗi khi đăng nhập",
+                    title: "Error logging in",
                 // html: e.responseText
             });
             console.log(e.responseText)
@@ -251,11 +251,11 @@ function checkDangNhap() {
 function checkDangXuat(onSuccess) {
     Swal.fire({
         type: 'question',
-        title: 'Xác nhận',
-        text: 'Bạn có chắc muốn đăng xuất?',
+        title: 'Confirm',
+        text: 'Are you sure you want to logout?',
         showCancelButton: true,
-        confirmButtonText: 'Đồng ý',
-        cancelButtonText: 'Hủy'
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
 
     }).then((result) => {
         if (result.value) {
@@ -271,7 +271,7 @@ function checkDangXuat(onSuccess) {
                     if(data == 'ok') {
                         Swal.fire({
                             type: "success",
-                            title: "Đăng xuất thành công"
+                            title: "Logout successful"
                         }).then((result) => {
                             capNhatThongTinUser();
                             setListGioHang(null);
@@ -283,14 +283,14 @@ function checkDangXuat(onSuccess) {
                     } else {
                         Swal.fire({
                             type: "error",
-                            title: "Chưa có ai đăng nhập"
+                            title: "No one is logged in"
                         })
                     }
                 },
                 error: function(e) {
                     Swal.fire({
                         type: "error",
-                        title: "Có lỗi khi đăng xuất",
+                        title: "Error logging out",
                         // html: e.responseText
                     })
                     console.log(e.responseText)
@@ -303,7 +303,7 @@ function checkDangXuat(onSuccess) {
 function capNhatThongTinUser() {
     getCurrentUser((data) => {
         if(!data) {
-            document.getElementById("btnTaiKhoan").innerHTML = '<i class="fa fa-user"></i> Tài khoản';
+            document.getElementById("btnTaiKhoan").innerHTML = '<i class="fa fa-user"></i> Account';
             document.getElementsByClassName("menuMember")[0].classList.add('hide');
 
         } else {
@@ -313,24 +313,24 @@ function capNhatThongTinUser() {
     })
 }
 
-function promoToWeb(name, value) { // khuyen mai
+function promoToWeb(name, value) { // promotion
     if (!name || name == "Nothing") return "";
     var contentLabel = "";
     switch (name) {
         case "GiamGia":
-            contentLabel = `<i class="fa fa-bolt"></i> Giảm ` + value.toLocaleString() + `&#8363;`;
+            contentLabel = `<i class="fa fa-bolt"></i> Discount ` + value.toLocaleString() + `&#8363;`;
             break;
 
         case "TraGop":
-            contentLabel = `Trả góp ` + value.toLocaleString() + `%`;
+            contentLabel = `Installment ` + value.toLocaleString() + `%`;
             break;
 
         case "GiaReOnline":
-            contentLabel = `Giá rẻ online`;
+            contentLabel = `Online cheap`;
             break;
 
         case "MoiRaMat":
-            contentLabel = "Mới ra mắt";
+            contentLabel = "New launch";
             break;
     }
 
@@ -344,25 +344,25 @@ function promoToWeb(name, value) { // khuyen mai
 
 //  ================================ END WEB 2 =================================
 
-// Tạo event, hiệu ứng cho form tài khoản
+// Create events, effects for account form
 function setupEventTaiKhoan() {
     var taikhoan = document.getElementsByClassName('taikhoan')[0];
     var list = taikhoan.getElementsByTagName('input');
 
-    // Tạo eventlistener cho input để tạo hiệu ứng label
-    // Gồm 2 event onblur, onfocus được áp dụng cho từng input trong list bên trên
+    // Create eventlistener for input to create label effects
+    // Includes 2 events onblur, onfocus applied to each input in the list above
     ['blur', 'focus'].forEach(function(evt) {
         for (var i = 0; i < list.length; i++) {
             list[i].addEventListener(evt, function(e) {
-                var label = this.previousElementSibling; // lấy element ĐỨNG TRƯỚC this, this ở đây là input
-                if (e.type === 'blur') { // khi ấn chuột ra ngoài
-                    if (this.value === '') { // không có value trong input thì đưa label lại như cũ
+                var label = this.previousElementSibling; // get the element BEFORE this, this here is the input
+                if (e.type === 'blur') { // when clicking outside
+                    if (this.value === '') { // if no value in input, return label to original state
                         label.classList.remove('active');
                         label.classList.remove('highlight');
-                    } else { // nếu có chữ thì chỉ tắt hightlight chứ không tắt active, active là dịch chuyển lên trên
+                    } else { // if there is text, only turn off highlight but not active, active means moving up
                         label.classList.remove('highlight');
                     }
-                } else if (e.type === 'focus') { // khi focus thì label active + hightlight
+                } else if (e.type === 'focus') { // when focused, label is active + highlight
                     label.classList.add('active');
                     label.classList.add('highlight');
                 }
@@ -370,28 +370,28 @@ function setupEventTaiKhoan() {
         }
     })
 
-    // Event chuyển tab login-signup
+    // Event to switch login-signup tab
     var tab = document.getElementsByClassName('tab');
     for (var i = 0; i < tab.length; i++) {
         var a = tab[i].getElementsByTagName('a')[0];
         a.addEventListener('click', function(e) {
-            e.preventDefault(); // tắt event mặc định
+            e.preventDefault(); // disable default event
 
-            // Thêm active(màu xanh lá) cho li chứa tag a này => ấn login thì login xanh, signup thì signup sẽ xanh
+            // Add active (green color) to li containing tag a => click login then login is green, click signup then signup is green
             this.parentElement.classList.add('active');
 
-            // Sau khi active login thì phải tắt active sigup và ngược lại
-            // Trường hợp a này thuộc login => <li>Login</li> sẽ có nextElement là <li>SignUp</li>
+            // After activating login, must deactivate signup and vice versa
+            // If this a belongs to login => <li>Login</li> will have nextElement as <li>SignUp</li>
             if (this.parentElement.nextElementSibling) {
                 this.parentElement.nextElementSibling.classList.remove('active');
             }
-            // Trường hợp a này thuộc signup => <li>SignUp</li> sẽ có .previousElement là <li>Login</li>
+            // If this a belongs to signup => <li>SignUp</li> will have .previousElement as <li>Login</li>
             if (this.parentElement.previousElementSibling) {
                 this.parentElement.previousElementSibling.classList.remove('active');
             }
 
-            // Ẩn phần nhập của login nếu ấn signup và ngược lại
-            // href của 2 tab signup và login là #signup và #login -> tiện cho việc getElement dưới đây
+            // Hide login input if signup is clicked and vice versa
+            // href of 2 tabs signup and login are #signup and #login -> convenient for getElement below
             var target = this.href.split('#')[1];
             document.getElementById(target).style.display = 'block';
 
@@ -400,11 +400,11 @@ function setupEventTaiKhoan() {
         })
     }
 
-    // Đoạn code tạo event trên được chuyển về js thuần từ code jquery
-    // Code jquery cho phần tài khoản được lưu ở cuối file này
+    // The event creation code above was converted to vanilla js from jquery code
+    // Jquery code for account section is saved at the end of this file
 }
 
-// ==================== Những hàm khác ===================== 
+// ==================== Other functions ===================== 
 function numToString(num, char) {
     return num.toLocaleString().split(',').join(char || '.');
 }
@@ -528,11 +528,11 @@ function autocomplete(inp, arr) {
     });
 }
 
-// Thêm từ khóa tìm kiếm
+// Add search keywords
 function addTags(nameTag, link) {
     var new_tag = `<a href=` + link + `>` + nameTag + `</a>`;
 
-    // Thêm <a> vừa tạo vào khung tìm kiếm
+    // Add newly created <a> to the search box
     var khung_tags = document.getElementsByClassName('tags')[0];
     khung_tags.innerHTML += new_tag;
 }
@@ -554,13 +554,13 @@ function smallmenu(number) {
 
 function checklocalStorage() {
     if (typeof(Storage) == "undefined") {
-        alert('Máy tính không hỗ trợ localStorage. Không thể lưu thông tin sản phẩm, khách hàng!!');
+        alert('Your browser does not support localStorage. Cannot save product and customer information!!');
     } else {
-        console.log('LocaStorage OKE!');
+        console.log('LocalStorage OK!');
     }
 }
 
-// Di chuyển lên đầu trang
+// Scroll to top
 function gotoTop() {
     if (window.jQuery) {
         jQuery('html,body').animate({
@@ -754,19 +754,19 @@ function getThongTinSanPhamFrom_TheGioiDiDong() {
 
 // for(var p of list_products) {
 //     switch(p.promo.name) {
-//         case 'tragop':
+//         case 'tragop' (installment):
 //             p.MaKM = 4;
 //         break;
 
-//         case 'giareonline':
+//         case 'giareonline' (online cheap):
 //             p.MaKM = 3;
 //         break;
 
-//         case 'giamgia':
+//         case 'giamgia' (discount):
 //             p.MaKM = 2;
 //         break;
 
-//         case 'moiramat':
+//         case 'moiramat' (new launch):
 //             p.MaKM = 5;
 //         break;
 

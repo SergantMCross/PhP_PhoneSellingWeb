@@ -3,60 +3,60 @@ require_once("DB_driver.php");
 
 class DB_business extends DB_driver
 {
-    // Tên Table
+    // Table name
     protected $_table_name = '';
 
-    // Tên Khóa Chính
+    // Primary key name
     protected $_key = '';
 
-    // Hàm Khởi Tạo
+    // Constructor
     function __construct()
     {
         parent::connect();
     }
 
-    // hàm set table_name và key
+    // set table_name and key function
     function setTable($tenBang, $khoaChinh)
     {
-        // Khai báo tên bảng
+        // Declare table name
         $this->_table_name = $tenBang;
 
-        // Khai báo tên field id
+        // Declare ID field name
         $this->_key = $khoaChinh;
     }
 
-    // Hàm ngắt kết nối
+    // Destructor
     function __destruct()
     {
         parent::dis_connect();
     }
 
-    // Hàm thêm mới
+    // Add new function
     function add_new($data)
     {
         return parent::insert($this->_table_name, $data);
     }
 
-    // Hàm xóa theo id
+    // Delete by ID function
     function delete_by_id($id)
     {
         return $this->remove($this->_table_name, $this->_key . "='" . $id . "'");
     }
 
-    // Hàm cập nhật theo id
+    // Update by ID function
     function update_by_id($data, $id)
     {
         return $this->update($this->_table_name, $data, $this->_key . "='" . $id . "'");
     }
 
-    // hàm select theo id
+    // select by ID function
     function select_by_id($select, $id)
     {
         $sql = "select $select from " . $this->_table_name . " where " . $this->_key . " = '" . $id . "'";
         return $this->get_row($sql);
     }
 
-    // hàm get all
+    // get all function
     function select_all()
     {
         $sql = "select * from " . $this->_table_name;

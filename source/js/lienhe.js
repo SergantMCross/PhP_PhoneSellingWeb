@@ -1,32 +1,32 @@
 window.onload = function () {
     khoiTao();
 
-    // thêm tags (từ khóa) vào khung tìm kiếm
+    // add tags (keywords) to search box
     var tags = ["Samsung", "iPhone", "Huawei", "Oppo", "Mobi"];
     for (var t of tags) addTags(t, "index.php?search=" + t);
 }
 
 function nguoidung() {
-    //kiem tra ho ten
+    //check full name
     var hoten = document.formlh.ht.value;
-    //kiem tra so dien thoai
+    //check phone number
     var dienthoai = document.formlh.sdt.value;
 
-    //kiểm tra họ tên
+    //check full name
     if (!checkName(hoten)) {
-        addAlertBox('Họ tên không phù hợp.', '#f55', '#000', 3000);
+        addAlertBox('Invalid name.', '#f55', '#000', 3000);
         formlh.ht.focus();
         return false;
     }
     //-------
     else if (!checkPhone(dienthoai)) {
-        addAlertBox('Số điện thoại không phù hợp.', '#f55', '#000', 3000);
+        addAlertBox('Invalid phone number.', '#f55', '#000', 3000);
         return false;
     }
 
-    addAlertBox('Gửi thành công. Chúng tôi chân thành cám ơn những góp ý từ bạn.', '#5f5', '#000', 5000); // cám ơn
-    // document.formlh.reset(); // làm sạch
-    return false; // thoát
+    addAlertBox('Sent successfully. Thank you for your feedback.', '#5f5', '#000', 5000); // thank you
+    // document.formlh.reset(); // clear
+    return false; // exit
 }
 
 function checkName(str) {

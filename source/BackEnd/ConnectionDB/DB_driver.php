@@ -1,23 +1,23 @@
 <?php
-// Thư Viện Xử Lý Database
+// Database Processing Library
 class DB_driver
 {
-    // Biến lưu trữ kết nối
+    // Connection storage variable
     public $__conn,
         $localhost = "localhost",
         $user = "root",
         $pass = "",
         $DbName = "web2";
 
-    // Hàm Kết Nối
+    // Connect function
     function connect()
     {
-        // Nếu chưa kết nối thì thực hiện kết nối
+        // If not connected, establish connection
         if (!$this->__conn) {
-            // Kết nối
-            $this->__conn = mysqli_connect($this->localhost, $this->user, $this->pass, $this->DbName) or die('Lỗi kết nối');
+            // Connect
+            $this->__conn = mysqli_connect($this->localhost, $this->user, $this->pass, $this->DbName) or die('Connection error');
 
-            // Xử lý truy vấn UTF8 để tránh lỗi font
+            // Handle UTF8 query to avoid font errors
             mysqli_query($this->__conn, "SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'");
 
             mysqli_query($this->__conn, "set names 'utf8'");
@@ -25,33 +25,33 @@ class DB_driver
         }
     }
 
-    // Hàm Ngắt Kết Nối
+    // Disconnect function
     function dis_connect()
     {
-        // Nếu đang kết nối thì ngắt
+        // If connected, disconnect
         if ($this->__conn) {
             mysqli_close($this->__conn);
         }
     }
 
-    // Hàm Insert
+    // Insert function
     function insert($table, $data)
     {
-        // Kết nối
+        // Connect
         $this->connect();
 
-        // Lưu trữ danh sách field, (tạm thời chưa cần)
+        // Store field list (temporarily not needed)
         // $field_list = '';
-        // Lưu trữ danh sách giá trị tương ứng với field
+        // Store list of values corresponding to fields
         $value_list = '';
 
-        // Lặp qua data
+        // Loop through data
         foreach ($data as $key => $value) {
             // $field_list .= ",$key";
             $value_list .= ",'" . mysqli_escape_string($this->__conn, $value) . "'";
         }
 
-        // Vì sau vòng lặp các biến $field_list và $value_list sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
+        // After the loop, variables will have an extra comma, so we use trim to remove it
         // $sql = 'INSERT INTO ' . $table . '(' . trim($field_list, ',') . ') VALUES (' . trim($value_list, ',') . ')';
         $sql = 'INSERT INTO ' . $table . ' VALUES (' . trim($value_list, ',') . ')';
 
@@ -59,27 +59,27 @@ class DB_driver
         //return $sql;
     }
 
-    // Hàm Update
+    // Update function
     function update($table, $data, $where)
     {
-        // Kết nối
+        // Connect
         $this->connect();
         $sql = '';
-        // Lặp qua data
+        // Loop through data
         foreach ($data as $key => $value) {
             $sql .= "$key = '" . mysqli_escape_string($this->__conn, $value) . "',";
         }
 
-        // Vì sau vòng lặp biến $sql sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
+        // After the loop, $sql will have an extra comma, so we use trim to remove it
         $sql = 'UPDATE ' . $table . ' SET ' . trim($sql, ',') . ' WHERE ' . $where;
 
         return mysqli_query($this->__conn, $sql);
     }
 
-    // Hàm delete
+    // Delete function
     function remove($table, $where)
     {
-        // Kết nối
+        // Connect
         $this->connect();
 
         // Delete
@@ -87,46 +87,46 @@ class DB_driver
         return mysqli_query($this->__conn, $sql);
     }
 
-    // Hàm lấy danh sách
+    // Get list function
     function get_list($sql)
     {
-        // Kết nối
+        // Connect
         $this->connect();
 
         $result = mysqli_query($this->__conn, $sql);
 
         if (!$result) {
-            die('Câu truy vấn bị sai ' . $sql);
+            die('Query error ' . $sql);
         }
 
         $return = array();
 
-        // Lặp qua kết quả để đưa vào mảng
+        // Loop through results to add to array
         while ($row = mysqli_fetch_assoc($result)) {
             $return[] = $row;
         }
 
-        // Xóa kết quả khỏi bộ nhớ
+        // Free result from memory
         mysqli_free_result($result);
 
         return $return;
     }
 
-    // Hàm lấy 1 record dùng trong trường hợp lấy chi tiết tin
+    // Get single record function used for detail retrieval
     function get_row($sql)
     {
-        // Kết nối
+        // Connect
         $this->connect();
 
         $result = mysqli_query($this->__conn, $sql);
 
         if (!$result) {
-            die('Câu truy vấn bị sai ' . $sql);
+            die('Query error ' . $sql);
         }
 
         $row = mysqli_fetch_assoc($result);
 
-        // Xóa kết quả khỏi bộ nhớ
+        // Free result from memory
         mysqli_free_result($result);
 
         if ($row) {

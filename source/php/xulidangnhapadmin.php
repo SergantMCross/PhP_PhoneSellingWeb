@@ -3,7 +3,7 @@
         $taikhoan=$_POST['data_username'];
         $matkhau=md5($_POST['data_password']);
         
-        // Sau khi dang nhap
+        // After logging in
         require ("../BackEnd/ConnectionDB/DB_driver.php");
 
         $db = new DB_driver();

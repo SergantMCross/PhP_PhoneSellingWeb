@@ -4,13 +4,13 @@
 	if(!isset($_POST['request']) && !isset($_GET['request'])) die(null);
 
 	switch ($_POST['request']) {
-    	// lấy tất cả khuyến mãi
+    	// get all promotions
     	case 'getall':
 				$dskm = (new KhuyenMaiBUS())->select_all();
 		    	die (json_encode($dskm));
     		break;
 
-        // lấy khuyến mãi theo id
+        // get promotion by id
         case 'theoID':
                 $km = (new KhuyenMaiBUS())->select_by_id('*', $_POST['id']);
                 die (json_encode($km));

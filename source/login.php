@@ -19,13 +19,13 @@ function kiemTraDangNhap(){
     b=document.getElementById("password").value;
     if(a == "")
         {
-            alert("Tài khoản không được để trống!Vui lòng nhập tài khoản.");
+            alert("Username cannot be empty! Please enter your username.");
             form.username.focus();
             return false;
         }
     if(b == "")
         {
-            alert("Mật khẩu không được để trống!Vui lòng nhập mật khẩu.");
+            alert("Password cannot be empty! Please enter your password.");
             form.password.focus();
             return false;
         }
@@ -40,11 +40,11 @@ function kiemTraDangNhap(){
         success:function(kq){
             if(kq.indexOf("yes")!= -1) 
                 {
-                    alert("Đăng nhập thành công");
+                    alert("Login successful");
                     window.location="admin.php";
                 }
              else {
-                alert("Vui lòng kiểm tra lại");
+                alert("Please check again");
                 document.getElementById("username").value="";
                 document.getElementById("password").value="";
                 form.username.focus();
@@ -62,12 +62,12 @@ function kiemTraDangNhap(){
                 <div>
                     <h1 class="logo-badge text-whitesmoke"><span class="fa fa-user-circle"></span></h1>
                 </div>
-                    <h3 class="text-whitesmoke">Đăng nhập Admin</h3>
+                    <h3 class="text-whitesmoke">Admin Login</h3>
                     <p class="text-whitesmoke"></p>
                 <div class="container-content">
                     <form action="" method="post" name="form" class="margin-t">
                         <div class="form-group">
-                            <input name="username" id="username" type="text" class="form-control" placeholder="Tên đăng nhập" required="">
+                            <input name="username" id="username" type="text" class="form-control" placeholder="Username" required="">
                         </div>
                         <div class="form-group">
                             <input name="password" id="password" type="password" class="form-control" placeholder="*****" required="">
@@ -75,7 +75,7 @@ function kiemTraDangNhap(){
                         <button type="button" class="form-button button-l margin-b" onclick="kiemTraDangNhap()">Sign In</button>
 
                         <div id="hienthiketqua"></div>
-                        <!-- Xử lí đăng nhập với thông tin tài khoản trên database -->
+                        <!-- Handle login with database account information -->
 
                         <!-- <a class="text-darkyellow" href="#"><small>Forgot your password?</small></a> -->
                         <!-- <p class="text-whitesmoke text-center"><small>Do not have an account?</small></p> -->

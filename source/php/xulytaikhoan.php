@@ -76,7 +76,7 @@
 			"TrangThai" => 1
 		));
 
-		// đăng nhập vào ngay
+		// login immediately
 		$sql = "SELECT * FROM nguoidung WHERE TaiKhoan='$xuli_newUser' AND MatKhau='$xuli_newPass' AND MaQuyen=1 AND TrangThai=1";
 		$result = (new DB_driver())->get_row($sql);
 

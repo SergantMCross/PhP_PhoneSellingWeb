@@ -4,7 +4,7 @@
 	if(!isset($_POST['request']) && !isset($_GET['request'])) die(null);
 
 	switch ($_POST['request']) {
-    	// lấy tất cả loại sản phẩm (hãng)
+    	// get all product types (brands)
     	case 'getall':
 				$dslsp = (new LoaiSanPhamBUS())->select_all();
 		    	die (json_encode($dslsp));

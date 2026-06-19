@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="shortcut icon" href="img/favicon.ico" />
 
-	<title>Thế giới điện thoại</title>
+	<title>Smartphone Store</title>
 
 	<!-- Load font awesome icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
@@ -51,7 +51,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 				    <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel" >Nhập thông tin thanh toán</h5>
+				        <h5 class="modal-title" id="exampleModalLabel" >Enter payment info</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
 				          <span aria-hidden="true">&times;</span>
 				        </button>
@@ -59,8 +59,8 @@
 				    <form action="" onsubmit="return xacNhanThanhToan()">
 						<div class="modal-body" id="thongtinthanhtoan"></div>
 						<div class="modal-footer">
-				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-				        	<button type="submit" class="btn btn-primary" id="btnXacNhan">Xác nhận</button>
+				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				        	<button type="submit" class="btn btn-primary" id="btnXacNhan">Confirm</button>
 				      	</div>
 				    </form>
 		    	</div>

@@ -1,12 +1,12 @@
 # Smartphone Store
 
-A PHP-based e-commerce website for selling smartphones.
+A PHP-based e-commerce website for selling smartphones. Features product browsing, user accounts, shopping cart, order management, and an admin panel.
 
 ## Requirements
 
 - PHP 7.2+
 - MySQL / MariaDB
-- Apache (with mod_rewrite) or any PHP-compatible web server
+- Apache or any PHP-compatible web server
 
 ## Installation
 
@@ -26,12 +26,12 @@ Place the project folder in your web server's document root:
 
 ### 3. Configure database connection
 
-Edit `BackEnd/ConnectionDB/DB_driver.php` if needed:
+Edit `BackEnd/ConnectionDB/DatabaseDriver.php` if needed:
 
 ```php
-$localhost = "localhost";
-$user = "root";
-$pass = "";
+$Localhost = "localhost";
+$User = "root";
+$Pass = "";
 $DbName = "web2";
 ```
 
@@ -40,37 +40,30 @@ $DbName = "web2";
 Open your browser and go to:
 
 ```
-http://localhost/source/
+http://localhost/your-folder-name/
 ```
-
-(Adjust the path if the folder name is different)
 
 ### Admin Panel
 
-**URL:** `http://localhost/source/login.php`
+**URL:** `http://localhost/your-folder-name/Login.php`
 
 Default admin accounts are stored in the `nguoidung` table with `MaQuyen != 1`.
 
 ### Project Structure
 
 ```
-source/
 ├── index.php                # Homepage
-├── admin.php                # Admin panel
-├── login.php                # Admin login
-├── chitietsanpham.php       # Product detail page
-├── giohang.php              # Shopping cart
-├── nguoidung.php            # User account page
-├── php/                     # Backend PHP logic
+├── Admin.php                # Admin panel
+├── Login.php                # Admin login
+├── ProductDetail.php        # Product detail page
+├── Cart.php                 # Shopping cart
+├── User.php                 # User account page
+├── php/                     # Backend PHP logic (products, orders, accounts, etc.)
 ├── js/                      # JavaScript files
 ├── css/                     # Stylesheets
-├── img/                     # Images
+├── img/                     # Product images
 ├── lib/                     # Libraries
 ├── BackEnd/ConnectionDB/    # Database classes
 ├── data/                    # Data files
 └── web2.sql                 # Database dump
 ```
-
-## Note
-
-This is an older PHP project that uses MySQLi (deprecated in newer PHP versions). For production use, consider migrating to PDO or a modern framework.
